@@ -1,4 +1,4 @@
-const jwtHelper = require("../helpers/jwt.helper");
+const {jwtHelper} = require("../helpers");
 const debug = console.log.bind(console);
 const bcrypt = require("bcryptjs");
 const db = require("../models");
@@ -15,7 +15,7 @@ let login = async (req, res) => {
       //email and password
       const email = req.body.email
       const password = req.body.password
-      let user = await db.user.findOne({
+      let user = await db.Users.findOne({
         where: {
           email : email
         },

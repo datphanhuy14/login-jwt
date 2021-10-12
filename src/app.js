@@ -2,9 +2,7 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 require('dotenv').config()
-const defautRoute = require('./app/routes/index');
-const ApiRoute = require('./app/routes/api');
-
+const defautRoute = require('./app/routes');
 const app = express();
 
 app.use(logger('dev'));
@@ -38,7 +36,7 @@ db.sequelize.sync({force: false}).then(() => {
 });
 
 
-app.use('/api', ApiRoute);
+// app.use('/api', ApiRoute);
 app.use('/', defautRoute);
 
 
