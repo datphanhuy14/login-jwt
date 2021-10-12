@@ -1,6 +1,8 @@
 
 const config = require("../config/db.config.js");
-
+const fs = require('fs');
+const path = require('path');
+const basename = path.basename(__filename);
 const Sequelize = require("sequelize");
 const sequelize = new Sequelize(
   config.database,
@@ -17,7 +19,15 @@ const sequelize = new Sequelize(
 );
 
 const db = {};
-
+fs
+    .readdirSync(path.join(__dirname, './'))
+    .filter(file => {
+      return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js');
+    })
+    .forEach(file => {
+        const model = require(path.join(__dirname,'./', file))(sequelize, Sequelize.DataTypes);
+        db[model.name] = model;
+    });
 Object.keys(db).forEach(function(modelName) {
     if (db[modelName].associate) {
         db[modelName].associate(db);
@@ -27,19 +37,5 @@ Object.keys(db).forEach(function(modelName) {
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
-db.user = require("../models/user.model.js")(sequelize, Sequelize);
-db.role = require("../models/role.model.js")(sequelize, Sequelize);
-db.userRole = require("../models/userRoles.model.js")(sequelize, Sequelize);
-
-db.role.belongsToMany(db.user, {
-    through: "user_roles",
-    foreignKey: "role_id",
-    otherKey: "id"
-  });
-  db.user.belongsToMany(db.role, {
-    through: "user_roles",
-    foreignKey: "user_id",
-    otherKey: "id"
-  });
   
 module.exports = db;

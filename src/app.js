@@ -2,8 +2,8 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 require('dotenv').config()
-const defautRoute = require('./routes/index');
-const ApiRoute = require('./routes/api');
+const defautRoute = require('./app/routes/index');
+const ApiRoute = require('./app/routes/api');
 
 const app = express();
 
@@ -12,7 +12,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-const db = require("./models");
+const db = require("./app/models");
 // const Role = db.role;
 
 // force: true will drop the table if it already exists
