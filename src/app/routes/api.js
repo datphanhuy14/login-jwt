@@ -4,6 +4,7 @@ const cons = require("../controllers")
 
 /* GET users listing. */
 router.get("/test", cons.test.friendLists);
-router.get("/getAll", cons.user.list);
+router.get("/initdb", cons.test.initDb);
+router.get("/getAll", cons.user.list2);
 
 module.exports = router;

@@ -1,7 +1,8 @@
 module.exports = (sequelize, Sequelize) => {
-    const Role = sequelize.define("Roles", {
+    const Role = sequelize.define("roles", {
       id: {
         type: Sequelize.INTEGER,
+        autoIncrement: true,
         primaryKey: true
       },
       name: {
@@ -29,7 +30,8 @@ module.exports = (sequelize, Sequelize) => {
       tableName: 'roles'
   }
     );
-    
-  
+    Role.associate = (models) => {
+      Role.hasMany(models.users);
+    };
     return Role;
   };

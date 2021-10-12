@@ -4,7 +4,7 @@ const {uuidPrimaryKey} = require('../helpers')
 // const db = require("../models");
 module.exports = (sequelize, Sequelize) => {
   const Users = sequelize.define(
-    "Users",
+    "users",
     {
       id: uuidPrimaryKey(),
       facebookId: { 
@@ -55,5 +55,13 @@ module.exports = (sequelize, Sequelize) => {
       tableName: "users",
     }
   );
+  Users.associate = (models) => {
+    Users.belongsTo(models.roles, {
+      onDelete: 'CASCADE',
+      foreignKey: {
+        allowNull: true,
+      },
+    });
+  };
   return Users;
 };

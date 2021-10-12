@@ -15,7 +15,7 @@ let login = async (req, res) => {
       //email and password
       const email = req.body.email
       const password = req.body.password
-      let user = await db.Users.findOne({
+      let user = await db.users.findOne({
         where: {
           email : email
         },

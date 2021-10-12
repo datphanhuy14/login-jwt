@@ -16,23 +16,7 @@ const db = require("./app/models");
 // force: true will drop the table if it already exists
 db.sequelize.sync({force: false}).then(() => {
   console.info(`Connection has been established successfully ${process.env.DB_PORT}`);
-// function initial() {
-//     Role.create({
-//       id: 1,
-//       name: "user"
-//     });
-   
-//     Role.create({
-//       id: 2,
-//       name: "moderator"
-//     });
-   
-//     Role.create({
-//       id: 3,
-//       name: "admin"
-//     });
-//   }
-//   initial();
+
 });
 
 
