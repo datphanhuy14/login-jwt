@@ -1,14 +1,20 @@
 /* eslint-disable no-unused-vars */
 'use strict';
+const uuidPrimaryKey = require('../app/helpers/uuid')
 
 module.exports = {
     up: (migration, DataTypes) => {
         return migration.createTable('users', {
-            id: {
-                type: DataTypes.STRING,
-                primaryKey: true,
-                unique:true,
-                allowNull: false
+            id: uuidPrimaryKey(),
+            googleId:{
+              type: DataTypes.STRING,
+              allowNull: true,
+              field:"google_id"
+            },
+            facebookId:{
+              type: DataTypes.STRING,
+              allowNull: true,
+              field:"facebook_id"
             },
             email:{
               type:DataTypes.STRING,
@@ -33,11 +39,6 @@ module.exports = {
               type: DataTypes.INTEGER,
               allowNull: true,
               field: "role_id",
-              validate: {
-                min: 0,
-                max: 5,
-              },
-              defaultValue: 0,
             },
             createdAt: {
                 type: DataTypes.DATE,

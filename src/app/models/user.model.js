@@ -1,15 +1,21 @@
-const { v4: uuidv4 } = require("uuid");
+const {uuidPrimaryKey} = require('../helpers')
+
+
 // const db = require("../models");
 module.exports = (sequelize, Sequelize) => {
   const Users = sequelize.define(
     "Users",
     {
-      id: {
+      id: uuidPrimaryKey(),
+      facebookId: { 
         type: Sequelize.STRING,
-        primaryKey: true,
-        allowNull: false,
-        defaultValue: uuidv4(),
-        unique: true,
+        allowNull: true,
+        field: "facebook_id"
+      },
+      googleId: { 
+        type: Sequelize.STRING,
+        allowNull: true,
+        field: "google_id"
       },
       fullname: {
         type: Sequelize.STRING,
@@ -18,7 +24,6 @@ module.exports = (sequelize, Sequelize) => {
       email: {
         type: Sequelize.STRING,
         unique: true,
-        validate: {isEmail: true}
       },
       password: {
         type: Sequelize.STRING,
@@ -31,28 +36,24 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.INTEGER,
         allowNull: true,
         field: "role_id",
-        validate: {
-          min: 0,
-          max: 5,
-        },
         defaultValue: 0,
       },
       createdAt: {
         type: Sequelize.DATE,
         allowNull: true,
-        field: 'created_at'
-    },
+        field: "created_at",
+      },
       updatedAt: {
         type: Sequelize.DATE,
         allowNull: true,
-        field: 'updated_at'
-    }
+        field: "updated_at",
+      },
     },
     {
       timestamps: true,
+      underscored: true,
       tableName: "users",
     }
   );
-
-  return Users; 
+  return Users;
 };

@@ -11,7 +11,7 @@ module.exports = {
                 allowNull: false
             },
             userId: {
-              type: DataTypes.STRING,
+              type: DataTypes.UUID,
               field: 'user_id'
             },
             roleId: {

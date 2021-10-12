@@ -26,6 +26,7 @@ module.exports = (sequelize, Sequelize) => {
     },
     {
         timestamps: true,
+        underscored: true,
         tableName: 'user_roles'
     });
     

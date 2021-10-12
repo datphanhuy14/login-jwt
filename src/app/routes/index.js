@@ -6,7 +6,7 @@ const {AuthMiddleWare} = require("../middlewares/");
 
 /* GET home page. */
 
-router.use('/', loginApi)
+router.use('/user', loginApi)
 router.use('/api',AuthMiddleWare.isAuth, mainApi)
 router.post('/init', function(req, res) {
   res.status(404).json({message: "Not found content"})
