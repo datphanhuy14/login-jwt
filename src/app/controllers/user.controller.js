@@ -1,7 +1,6 @@
 const db = require("../models");
 const bcrypt = require("bcryptjs");
 const _ = require("lodash");
-const userEntity = require("../entities/user.entity");
 
 let createUser = async (req, res) => {
   try {
@@ -19,7 +18,7 @@ let createUser = async (req, res) => {
   }
 };
 let list = async (req, res) => {
-  let user = await userEntity.list();
+  let user = await db.user.findAll();
   let data = [];
   user.map(remove);
   function remove(_user) {

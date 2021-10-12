@@ -3,7 +3,7 @@ const router = express.Router();
 const cons = require("../controllers");
 
 
-router.post("/user", cons.auth.login);
+router.post("/login", cons.auth.login);
 router.post("/refresh-token", cons.auth.refreshToken);
 router.post("/create", cons.user.createUser);
 

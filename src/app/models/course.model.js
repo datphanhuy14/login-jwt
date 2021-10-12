@@ -76,7 +76,7 @@ module.exports = (sequelize, Sequelize) => {
     {
       timestamps: true,
       underscored: true,
-      tableName: "users",
+      tableName: "courses",
     }
   );
   Courses.associate = (models) => {
