@@ -1,4 +1,5 @@
 const express = require('express');
+const helper = require('./helper')
 
 const restRoutes = (ModelController) => {
   const router = express.Router();
@@ -6,7 +7,7 @@ const restRoutes = (ModelController) => {
   // List
   router.get('/', async (req, res) => {
     const payload = await ModelController.fetchAll();
-    res.send(payload);
+    res.json(helper.formatOutputData(payload,"{{common.success}}"));
   });
 
   // Retrieve
@@ -14,9 +15,9 @@ const restRoutes = (ModelController) => {
     const payload = await ModelController.fetch(req.params.id);
 
     if (payload) {
-      res.send(payload);
+      res.json(helper.formatOutputData(payload,"{{common.success}}"));
     } else {
-      res.status(404).send('Not found');
+      res.status(404).json({message: 'Not found'});
     }
   });
 
@@ -24,9 +25,9 @@ const restRoutes = (ModelController) => {
   router.post('/', async (req, res) => {
     try {
       const payload = await ModelController.create(req.body);
-      res.status(201).send(payload);
-    } catch (e) {
-      res.status(500).send(e);
+      res.status(201).json(helper.formatOutputData(payload,"{{common.success}}"));
+    } catch (error) {
+      res.status(500).json(helper.displayErrorMessage(error));
     }
   });
 
@@ -34,7 +35,7 @@ const restRoutes = (ModelController) => {
   router.patch('/:id', async (req, res) => {
     try {
       const payload = await ModelController.update(req.params.id, req.body);
-      res.status(204).send(payload);
+      res.status(204).json(helper.formatOutputData(payload,"{{common.success}}"));
     } catch (e) {
       res.status(500).send(e);
     }
@@ -44,9 +45,9 @@ const restRoutes = (ModelController) => {
   router.delete('/:id', async (req, res) => {
     try {
       await ModelController.delete(req.params.id);
-      res.send('Resource delted');
-    } catch (e) {
-      res.status(404).send(e);
+      res.json({message: 'true'});
+    } catch (error) {
+      res.status(404).json(helper.displayErrorMessage(error));
     }
   });
 

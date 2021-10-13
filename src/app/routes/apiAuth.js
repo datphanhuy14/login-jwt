@@ -9,7 +9,7 @@ router.get("/test", cons.test.friendLists);
 router.get("/initdb", cons.test.initDb);
 router.get("/getAll", cons.user.list2);
 // Course Routes
-router.use('/api/v1',apiv1)
+router.use('/v1',apiv1)
 
 
 

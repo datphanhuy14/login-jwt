@@ -1,6 +1,7 @@
 const db = require("../models");
 const bcrypt = require("bcryptjs");
 const _ = require("lodash");
+const {helper} = require("../helpers") 
 
 let createUser = async (req, res) => {
   try {
@@ -49,7 +50,7 @@ let list2 = async (req, res) => {
   //   _user = _.omit(_user, ["password"]);
   //   data.push(_user);
   // }
-  res.json(data);
+  res.json(helper.formatOutputData(data, "{{common.success}}"));
 };
 
 module.exports = {
