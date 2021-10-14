@@ -1,40 +1,45 @@
-const jwt = require("jsonwebtoken");
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
-let generateToken = (user, secretSignature, tokenLife) => {
-    return new Promise((resolve, reject) => {
-        const userData = {
-            id: user.id,
-            name: user.name,
-            email: user.email,
-        }
-        jwt.sign(
-            { data: userData },
-            secretSignature,
-            {
-                algorithm: "HS256",
-                expiresIn: tokenLife,
-            },
-            (error, token) => {
-                if (error) {
-                    return reject(error);
-                }
-                resolve(token);
-            });
-    });
-}
+const accessTokenLife = process.env.ACCESS_TOKEN_LIFE;
+const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET;
 
-let verifyToken = (token, secretKey) => {
-    return new Promise((resolve, reject) => {
-        jwt.verify(token, secretKey, (error, decoded) => {
-            if (error) {
-                return reject(error);
-            }
-            resolve(decoded);
-        });
+const generateToken = (user, secretSignature, tokenLife) => {
+  return new Promise((resolve, reject) => {
+    const userData = {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+    };
+    jwt.sign(
+        {data: userData},
+        secretSignature || accessTokenSecret,
+        {
+          algorithm: 'HS256',
+          expiresIn: tokenLife || accessTokenLife,
+        },
+        (error, token) => {
+          if (error) {
+            return reject(error);
+          }
+          resolve(token);
+        },
+    );
+  });
+};
+
+const verifyToken = (token, secretKey) => {
+  return new Promise((resolve, reject) => {
+    jwt.verify(token, secretKey, (error, decoded) => {
+      if (error) {
+        return reject(error);
+      }
+      resolve(decoded);
     });
-}
+  });
+};
 
 module.exports = {
-    generateToken: generateToken,
-    verifyToken: verifyToken,
+  generateToken: generateToken,
+  verifyToken: verifyToken,
 };
