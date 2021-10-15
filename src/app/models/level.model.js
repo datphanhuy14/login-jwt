@@ -1,23 +1,30 @@
 module.exports = (sequelize, Sequelize) => {
-  const Role = sequelize.define('roles', {
+  const Level = sequelize.define('levels', {
     id: {
       type: Sequelize.INTEGER,
-      autoIncrement: true,
       primaryKey: true,
+      unique: true,
+      autoIncrement: true,
     },
-    name: {
+    code: {
       type: Sequelize.STRING,
-      field: 'name',
+      field: 'code',
     },
-    description: {
+    title: {
       type: Sequelize.STRING,
-      field: 'description',
+      field: 'title',
+    },
+    active: {
+      type: Sequelize.BOOLEAN,
+      field: 'active',
+      defaultValue: true,
     },
     createdAt: {
       type: Sequelize.DATE,
       allowNull: true,
       field: 'created_at',
     },
+
     updatedAt: {
       type: Sequelize.DATE,
       allowNull: true,
@@ -27,11 +34,12 @@ module.exports = (sequelize, Sequelize) => {
   {
     timestamps: true,
     underscored: true,
-    tableName: 'roles',
+    tableName: 'levels',
   },
   );
-  Role.associate = (models) => {
-    Role.hasMany(models.users);
+  Level.associate = (models) => {
+    Level.hasMany(models.courses);
   };
-  return Role;
+  return Level;
 };
+

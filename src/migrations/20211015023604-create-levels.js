@@ -3,20 +3,25 @@
 
 module.exports = {
   up: (migration, DataTypes) => {
-    return migration.createTable('roles', {
+    return migration.createTable('levels', {
       id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         unique: true,
         autoIncrement: true,
       },
-      name: {
+      code: {
         type: DataTypes.STRING,
-        field: 'name',
+        field: 'code',
       },
-      description: {
+      title: {
         type: DataTypes.STRING,
-        field: 'description',
+        field: 'title',
+      },
+      active: {
+        type: DataTypes.BOOLEAN,
+        field: 'active',
+        defaultValue: true,
       },
       createdAt: {
         type: DataTypes.DATE,
@@ -32,6 +37,6 @@ module.exports = {
     });
   },
   down: (migration, DataTypes) => {
-    return migration.dropTable('roles');
+    return migration.dropTable('levels');
   },
 };

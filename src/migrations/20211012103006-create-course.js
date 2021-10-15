@@ -1,9 +1,9 @@
 /* eslint-disable no-unused-vars */
-"use strict";
+'use strict';
 
 module.exports = {
   up: (migration, DataTypes) => {
-    return migration.createTable("courses", {
+    return migration.createTable('courses', {
       id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -12,68 +12,83 @@ module.exports = {
       },
       title: {
         type: DataTypes.STRING,
-        field: "title",
+        allowNull: false,
+        field: 'title',
       },
       code: {
         type: DataTypes.STRING,
-        field: "code",
+        allowNull: false,
+        field: 'code',
       },
       creditFee: {
         type: DataTypes.INTEGER,
-        field: "credit_fee",
+        field: 'credit_fee',
       },
       registrationFee: {
         type: DataTypes.INTEGER,
-        field: "registration_fee",
+        field: 'registration_fee',
       },
-      content: {
+      content1: {
         type: DataTypes.STRING,
-        field: "content",
+        allowNull: true,
+        field: 'content_1',
       },
-      status: {
+      content2: {
         type: DataTypes.STRING,
-        field: "status",
-        defaultValue: "active",
+        allowNull: true,
+        field: 'content_2',
+      },
+      content3: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        field: 'content_3',
+      },
+      active: {
+        type: DataTypes.BOOLEAN,
+        field: 'active',
+        defaultValue: true,
       },
       image: {
         type: DataTypes.STRING,
-        field: "image",
+        field: 'image',
       },
-      slug: {
-        type: DataTypes.STRING,
-        field: "slug",
+      levelId: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        field: 'level_id',
       },
       credits: {
         type: DataTypes.INTEGER,
-        field: "credits",
+        field: 'credits',
       },
       subjects: {
         type: DataTypes.ARRAY(DataTypes.JSON),
-        field: "subjects",
+        allowNull: true,
+        field: 'subjects',
       },
       startTime: {
         type: DataTypes.DATE,
         allowNull: true,
-        field: "start_time",
+        field: 'start_time',
       },
       endTime: {
         type: DataTypes.DATE,
         allowNull: true,
-        field: "end_time",
+        field: 'end_time',
       },
       createdAt: {
         type: DataTypes.DATE,
         allowNull: true,
-        field: "created_at",
+        field: 'created_at',
       },
       updatedAt: {
         type: DataTypes.DATE,
         allowNull: true,
-        field: "updated_at",
+        field: 'updated_at',
       },
     });
   },
   down: (migration, DataTypes) => {
-    return migration.dropTable("courses");
+    return migration.dropTable('courses');
   },
 };

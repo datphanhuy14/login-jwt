@@ -1,5 +1,5 @@
 const {restRoutes} = require('../../helpers');
-const courses = require('../../controllers/course.controller');
+const {course} = require('../../controllers');
 
-const routes = restRoutes(courses);
+const routes = restRoutes(course);
 module.exports = routes;
