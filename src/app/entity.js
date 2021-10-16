@@ -1,9 +1,9 @@
 /* eslint-disable no-setter-return */
 /* eslint-disable no-async-promise-executor */
 /* eslint-disable prefer-promise-reject-errors */
-const _ = require( 'lodash' );
-const {helper} = require( './helpers' );
-const validator = require( 'validator' );
+import { get } from 'lodash';
+import { helper } from './helpers';
+import { isNumeric } from 'validator';
 
 class Entity {
   constructor( model ) {
@@ -47,7 +47,7 @@ class Entity {
   detail( id, options = {} ) {
     return new Promise( async ( resolve, reject ) => {
       try {
-        if ( !id || ( id && !validator.isNumeric( id.toString() ) ) ) {
+        if ( !id || ( id && !isNumeric( id.toString() ) ) ) {
           return reject( {
             message: '{{common.paramInvalid}}',
           } );
@@ -135,7 +135,7 @@ class Entity {
           } );
         }
 
-        options.where = Object.assign( {}, _.get( options, 'where' ) || {}, {
+        options.where = Object.assign( {}, get( options, 'where' ) || {}, {
           id,
         } );
 
@@ -165,4 +165,4 @@ class Entity {
   }
 }
 
-module.exports = Entity;
+export default Entity;

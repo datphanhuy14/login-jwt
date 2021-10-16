@@ -3,4 +3,4 @@ class GoogleClient{
     secret = "v1JWTjZA4AfscFpf0epR3Pmr";
 }
 
-module.exports = new GoogleClient;
+export default new GoogleClient;

@@ -1,8 +1,8 @@
-const subjectEntity = require( './subject.entity' ).default;
-const levelEntity = require( './level.entity' ).default;
-const courseEntity = require( './course.entity' );
+import subjectEntity from './subject.entity';
+import levelEntity from './level.entity';
+import courseEntity from './course.entity';
 
-module.exports = {
+export {
   subjectEntity,
   levelEntity,
   courseEntity,

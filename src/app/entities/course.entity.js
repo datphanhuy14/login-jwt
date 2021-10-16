@@ -1,4 +1,4 @@
-const Entity = require( '../entity' );
+const Entity = require('../entity').default;
 const models = require( '../models' );
 
 class courseEntity extends Entity {
