@@ -1,9 +1,9 @@
-const {jwtHelper} = require( '../helpers' );
+import { jwtHelper } from '../helpers';
 const debug = console.log.bind( console );
-const bcrypt = require( 'bcryptjs' );
-const db = require( '../models' );
-const _ = require( 'lodash' );
-const {helper} = require( '../helpers' );
+import { compareSync } from 'bcryptjs';
+import { users } from '../models';
+import { omit } from 'lodash';
+import { helper } from '../helpers';
 require( 'dotenv' ).config();
 const tokenList = {};
 
@@ -16,14 +16,14 @@ const login = async ( req, res ) => {
     // email and password
     const email = req.body.email;
     const password = req.body.password;
-    let user = await db.users.findOne( {
+    let user = await users.findOne( {
       where: {
         email: email,
       },
       raw: true,
     } );
     if ( !user ) return res.status( 400 ).json( {msg: 'User not exist'} );
-    const comparePass = bcrypt.compareSync( password, user.password );
+    const comparePass = compareSync( password, user.password );
     if ( !comparePass ) {
       return res.status( 400 ).json( {msg: 'Password incorrect'} );
     }
@@ -39,7 +39,7 @@ const login = async ( req, res ) => {
     );
 
     tokenList[refreshToken] = {accessToken, refreshToken};
-    user = _.omit( user, ['password'] );
+    user = omit( user, ['password'] );
     return res
         .status( 200 )
         .json(
@@ -88,7 +88,7 @@ const refreshToken = async ( req, res ) => {
   }
 };
 
-module.exports = {
+export {
   login,
   refreshToken,
 };

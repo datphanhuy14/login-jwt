@@ -1,4 +1,4 @@
-const jwt = require( 'jsonwebtoken' );
+import jwt from 'jsonwebtoken';
 require( 'dotenv' ).config();
 
 const accessTokenLife = process.env.ACCESS_TOKEN_LIFE;
@@ -39,7 +39,7 @@ const verifyToken = ( token, secretKey ) => {
   } );
 };
 
-module.exports = {
-  generateToken: generateToken,
-  verifyToken: verifyToken,
+export  {
+  generateToken,
+  verifyToken,
 };

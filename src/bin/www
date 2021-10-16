@@ -4,7 +4,7 @@
  * Module dependencies.
  */
  const debug = console.log.bind( console );
-let app = require( '../app' );
+let app = require( '../server' );
 // var debug = require('debug')('lms-login:server');
 
 let http = require( 'http' );

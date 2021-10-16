@@ -3,8 +3,8 @@ import Models from './models';
 import Middlewares from './middlewares';
 import Helpers from './helpers';
 import Entity from './helpers';
-import Routes from './routes';
+import router from './routes';
 
-export default {
-    Routes,Helpers,Middlewares,Models,Controllers,Entity
+export {
+    router,Helpers,Middlewares,Models,Controllers,Entity
 };

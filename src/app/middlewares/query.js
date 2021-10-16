@@ -25,7 +25,7 @@ const operators = {
     notRegexp: Sequelize.Op.notRegexp
 };
 
-module.export = class Query {
+export class Query {
     static init( req, res, next ) {
         const { options } = req;
         const paginate = Query.paginate( req );
@@ -129,4 +129,4 @@ module.export = class Query {
             return false;
         }
     }
-};
+}

@@ -1,11 +1,11 @@
-const course = require( './course.route' );
-const level = require( './level.route' );
-const subject = require( './subject.route' );
-const express = require( 'express' );
-const router = express.Router();
+import course from './course.route';
+import level from './level.route';
+import subject from './subject.route';
+import { Router } from 'express';
+const router = Router();
 
 router.use( '/course', course );
 router.use( '/level', level );
 router.use( '/subject', subject );
 
-module.exports = router;
+export default router;

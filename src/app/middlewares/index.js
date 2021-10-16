@@ -1,5 +1,3 @@
-const AuthMiddleWare = require( './auth' );
+import isAuth from './auth';
 
-module.exports = {
-    AuthMiddleWare
-};
+export {isAuth} ;

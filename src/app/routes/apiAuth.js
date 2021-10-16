@@ -1,13 +1,13 @@
-const express = require( 'express' );
-const router = express.Router();
-const cons = require( '../controllers' );
-const apiv1 = require( './API' );
+import { Router } from "express";
+const router = Router();
+import { test, user } from "../controllers";
+import apiv1 from "./API";
 
 /* Test routes. */
-router.get( '/test', cons.test.friendLists );
-router.get( '/initdb', cons.test.initDb );
-router.get( '/getAll', cons.user.list2 );
+router.get("/test", test.friendLists);
+router.get("/initdb", test.initDb);
+router.get("/getAll", user.list2);
 // API Routes
-router.use( '/v1', apiv1 );
+router.use("/v1", apiv1);
 
-module.exports = router;
+export default router;

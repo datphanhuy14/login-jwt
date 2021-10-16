@@ -1,11 +1,11 @@
-const express = require( 'express' );
-const router = express.Router();
-const loginApi = require( './user' );
-const mainApi = require( './apiAuth' );
-const {AuthMiddleWare} = require( '../middlewares/' );
+import { Router } from 'express';
+const router = Router();
+import loginApi from './user';
+import mainApi from './apiAuth';
+import { isAuth } from '../middlewares/';
 
 /* GET home page. */
 router.use( '/auth', loginApi );
-router.use( '/api', AuthMiddleWare.isAuth, mainApi );
+router.use( '/api', isAuth, mainApi );
 
-module.exports = router;
+export default router;

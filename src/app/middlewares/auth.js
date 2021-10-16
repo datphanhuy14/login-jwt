@@ -1,4 +1,4 @@
-const { jwtHelper } = require( "../helpers" );
+import { jwtHelper } from "../helpers";
 const debug = console.log.bind( console );
 
 const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET;
@@ -28,6 +28,4 @@ let isAuth = async ( req, res, next ) => {
 };
 
 
-module.exports = {
-  isAuth,
-};
+export default isAuth;

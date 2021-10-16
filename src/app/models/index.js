@@ -1,34 +1,34 @@
-const config = require( '../config/db.config.js' );
-const fs = require( 'fs' );
-const path = require( 'path' );
-const basename = path.basename( __filename );
-const Sequelize = require( 'sequelize' );
+import { database, username, password, host as _host, dialect as _dialect, pool as _pool } from '../config/db.config.js';
+import { readdirSync } from 'fs';
+import { basename as _basename, join } from 'path';
+const basename = _basename( __filename );
+import Sequelize, { DataTypes } from 'sequelize';
 const sequelize = new Sequelize(
-    config.database,
-    config.username,
-    config.password,
+    database,
+    username,
+    password,
     {
-      host: config.host,
-      dialect: config.dialect,
+      host: _host,
+      dialect: _dialect,
       operatorsAliases: 0,
 
-      pool: config.pool,
+      pool: _pool,
       logging: false,
       raw: true,
     },
 );
 
 const db = {};
-fs.readdirSync( path.join( __dirname ) )
+readdirSync( join( __dirname ) )
     .filter( ( file ) => {
       return (
         file.indexOf( '.' ) !== 0 && file !== basename && file.slice( -3 ) === '.js'
       );
     } )
     .forEach( ( file ) => {
-      const model = require( path.join( __dirname, file ) )(
+      const model = require( join( __dirname, file ) )(
           sequelize,
-          Sequelize.DataTypes,
+          DataTypes,
       );
       db[model.name] = model;
     } );
@@ -41,4 +41,4 @@ Object.keys( db ).forEach( function( modelName ) {
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
-module.exports = db;
+export default db;

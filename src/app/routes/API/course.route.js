@@ -1,13 +1,13 @@
 // const {restRoutes} = require('../../helpers');
 // const {level} = require('../../controllers');
-const {courseEntity: selfEntity} = require( '../../entities/' );
-const express = require( 'express' );
-const {helper} = require( '../../helpers' );
+import { courseEntity as selfEntity } from '../../entities/';
+import { Router } from 'express';
+import { helper } from '../../helpers';
 
 class Controller {
   // === init router ===
   constructor() {
-    const router = express.Router();
+    const router = Router();
 
     router
         .route( '/' )
@@ -124,4 +124,4 @@ class Controller {
 }
 
 // const routes = restRoutes(level);
-module.exports = new Controller;
+export default new Controller;

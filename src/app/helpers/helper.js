@@ -1,9 +1,9 @@
 
-const http = require( 'http' );
-const https = require( 'https' );
-const url = require( 'url' );
-const querystring = require( 'querystring' );
-const _ = require( 'lodash' );
+import http from 'http';
+import https from 'https';
+import { parse } from 'url';
+import { stringify } from 'querystring';
+import { isEmpty, uniq, find } from 'lodash';
 
 class Helper {
   constructor() { }
@@ -38,13 +38,13 @@ class Helper {
         userIds.push( updatedBy );
       }
 
-      if ( rows && !_.isEmpty( rows ) ) {
+      if ( rows && !isEmpty( rows ) ) {
         for ( const row of rows ) {
           const {createdBy, updatedBy} = row;
           userIds.push( createdBy );
           userIds.push( updatedBy );
 
-          if ( row.lessons && !_.isEmpty( rows ) ) {
+          if ( row.lessons && !isEmpty( rows ) ) {
             for ( const lesson of row.lessons ) {
               const {createdBy, updatedBy} = lesson;
               userIds.push( createdBy );
@@ -54,9 +54,9 @@ class Helper {
         }
       }
 
-      userIds = _.uniq( userIds );
+      userIds = uniq( userIds );
 
-      if ( !_.isEmpty( userIds ) ) {
+      if ( !isEmpty( userIds ) ) {
         const users = await req.app.service( {
           service: 'users',
           mod: 'users',
@@ -68,34 +68,34 @@ class Helper {
           },
         } );
 
-        if ( users && users.rows && !_.isEmpty( users.rows ) ) {
-          if ( rows && !_.isEmpty( rows ) ) {
+        if ( users && users.rows && !isEmpty( users.rows ) ) {
+          if ( rows && !isEmpty( rows ) ) {
             for ( const row of rows ) {
-              row.createdBy = _.find( users.rows, {id: row.createdBy} );
-              row.updatedBy = _.find( users.rows, {id: row.updatedBy} );
+              row.createdBy = find( users.rows, {id: row.createdBy} );
+              row.updatedBy = find( users.rows, {id: row.updatedBy} );
 
               if ( row.lessons ) {
                 for ( const lesson of row.lessons ) {
-                  lesson.createdBy = _.find( users.rows, {id: lesson.createdBy} );
-                  lesson.updatedBy = _.find( users.rows, {id: lesson.updatedBy} );
+                  lesson.createdBy = find( users.rows, {id: lesson.createdBy} );
+                  lesson.updatedBy = find( users.rows, {id: lesson.updatedBy} );
                 }
               }
 
               if ( row.trainingLessons ) {
                 for ( const trainingLesson of row.trainingLessons ) {
-                  trainingLesson.createdBy = _.find( users.rows, {id: trainingLesson.createdBy} );
-                  trainingLesson.updatedBy = _.find( users.rows, {id: trainingLesson.updatedBy} );
+                  trainingLesson.createdBy = find( users.rows, {id: trainingLesson.createdBy} );
+                  trainingLesson.updatedBy = find( users.rows, {id: trainingLesson.updatedBy} );
                 }
               }
             }
           }
 
           if ( createdBy ) {
-            result.data.createdBy = _.find( users.rows, {id: createdBy} );
+            result.data.createdBy = find( users.rows, {id: createdBy} );
           }
 
           if ( updatedBy ) {
-            result.data.updatedBy = _.find( users.rows, {id: updatedBy} );
+            result.data.updatedBy = find( users.rows, {id: updatedBy} );
           }
         }
       }
@@ -201,7 +201,7 @@ class Helper {
      */
   curl( settings ) {
     return new Promise( ( resolve, reject ) => {
-      const options = url.parse( `${settings.callUrl}` );
+      const options = parse( `${settings.callUrl}` );
 
       options.method = settings.method ? settings.method : 'GET';
       options.data = settings.data ? settings.data : {};
@@ -243,10 +243,10 @@ class Helper {
         reject( e );
       } );
 
-      req.write( querystring.stringify( options.data ) );
+      req.write( stringify( options.data ) );
       req.end();
     } );
   }
 }
 
-module.exports = new Helper();
+export default new Helper();

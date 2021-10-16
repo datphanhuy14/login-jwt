@@ -1,10 +1,10 @@
 // const db = require("../models");
-const {helper, jwtHelper} = require( '../helpers' );
-const passport = require( 'passport' );
+import { helper, jwtHelper } from '../helpers';
+import { authenticate } from 'passport';
 
 const fbPassport = async ( req, res ) => {
   try {
-    passport.authenticate( 'facebook', {
+    authenticate( 'facebook', {
       successRedirect: '/auth/profile',
       failureRedirect: '/auth/login',
     } );
@@ -14,7 +14,7 @@ const fbPassport = async ( req, res ) => {
 };
 const ggPassport = async ( req, res ) => {
   try {
-    passport.authenticate( 'google', {
+    authenticate( 'google', {
       successRedirect: '/auth/profile',
       failureRedirect: '/auth/login',
     } );
@@ -32,7 +32,7 @@ const profile = async ( req, res ) => {
       ),
   );
 };
-module.exports = {
+export {
   fbPassport,
   profile,
   ggPassport,

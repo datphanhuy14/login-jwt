@@ -1,8 +1,8 @@
-const jwtHelper = require( './jwt.helper' );
-const uuidPrimaryKey = require( './uuid' );
-const helper = require( './helper' );
+import jwtHelper from './jwt.helper';
+import uuidPrimaryKey from './uuid';
+import helper from './helper';
 
-module.exports = {
+export {
   jwtHelper,
   uuidPrimaryKey,
   helper,

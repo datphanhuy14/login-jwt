@@ -1,7 +1,4 @@
 const GoogleStrategy = require( 'passport-google-oauth2' ).Strategy;
-// const { User, Team, Report } = require('./sequelize');
-// const siteController = require('./controller/SiteContoller');
-// const config = require("../config/db.config");
 const db = require( '../models' );
 const googleClient = require( '../config/google_client' );
 

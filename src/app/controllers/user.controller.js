@@ -1,16 +1,16 @@
-const db = require( '../models' );
-const bcrypt = require( 'bcryptjs' );
-const _ = require( 'lodash' );
-const {helper} = require( '../helpers' );
+import { users, user as __user, roles } from '../models';
+import { hashSync, genSaltSync } from 'bcryptjs';
+import { omit } from 'lodash';
+import { helper } from '../helpers';
 
 const createUser = async ( req, res ) => {
   try {
-    const check = await db.users.findOne( {where: {email: req.body.email}} );
+    const check = await users.findOne( {where: {email: req.body.email}} );
     if ( check ) res.status( 401 ).json( {msg: 'email is valid'} );
     else {
-      const createUser = await db.users.create( {
+      const createUser = await users.create( {
         ...req.body,
-        password: bcrypt.hashSync( req.body.password, bcrypt.genSaltSync( 10 ) ),
+        password: hashSync( req.body.password, genSaltSync( 10 ) ),
       } );
       res.json( helper.formatOutputData( createUser, '{{common.success}}' ) );
     }
@@ -19,20 +19,20 @@ const createUser = async ( req, res ) => {
   }
 };
 const list = async ( req, res ) => {
-  const user = await db.user.findAll();
+  const user = await __user.findAll();
   const data = [];
   user.map( remove );
   function remove( _user ) {
-    _user = _.omit( _user, ['password'] );
+    _user = omit( _user, ['password'] );
     data.push( _user );
   }
   res.json( helper.formatOutputData( data, '{{common.success}}' ) );
 };
 const list2 = async ( req, res ) => {
-  const user = await db.users.findAll(
+  const user = await users.findAll(
       {
         include: {
-          model: db.roles,
+          model: roles,
         },
       },
       {raw: true},
@@ -53,7 +53,7 @@ const list2 = async ( req, res ) => {
   res.json( helper.formatOutputData( data, '{{common.success}}' ) );
 };
 
-module.exports = {
+export {
   list,
   createUser,
   list2,

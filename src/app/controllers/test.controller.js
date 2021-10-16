@@ -1,5 +1,5 @@
 const debug = console.log.bind( console );
-const db = require( '../models' );
+import { roles } from '../models';
 
 const friendLists = ( req, res ) => {
   debug(
@@ -20,27 +20,27 @@ const friendLists = ( req, res ) => {
   return res.status( 200 ).json( friends );
 };
 const initDb = async ( req, res ) => {
-  await db.roles.create( {
+  await roles.create( {
     name: 'user',
   } );
 
-  await db.roles.create( {
+  await roles.create( {
     name: 'moderator',
   } );
 
-  await db.roles.create( {
+  await roles.create( {
     name: 'admin',
   } );
-  await db.roles.create( {
+  await roles.create( {
     name: 'PROVIP',
   } );
-  await db.roles.create( {
+  await roles.create( {
     name: 'ALLLLLLL',
   } );
   res.status( 200 ).json( {success: true} );
 };
 
-module.exports = {
+export {
   friendLists,
   initDb,
 };
