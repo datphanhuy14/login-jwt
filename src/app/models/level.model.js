@@ -1,5 +1,5 @@
-module.exports = (sequelize, Sequelize) => {
-  const Level = sequelize.define('levels', {
+module.exports = ( sequelize, Sequelize ) => {
+  const Level = sequelize.define( 'levels', {
     id: {
       type: Sequelize.INTEGER,
       primaryKey: true,
@@ -37,8 +37,8 @@ module.exports = (sequelize, Sequelize) => {
     tableName: 'levels',
   },
   );
-  Level.associate = (models) => {
-    Level.hasMany(models.courses);
+  Level.associate = ( models ) => {
+    Level.hasMany( models.courses );
   };
   return Level;
 };

@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 
 // const db = require("../models");
-module.exports = (sequelize, Sequelize) => {
+module.exports = ( sequelize, Sequelize ) => {
   const Course = sequelize.define(
       'courses',
       {
@@ -62,7 +62,7 @@ module.exports = (sequelize, Sequelize) => {
           field: 'credits',
         },
         subjects: {
-          type: Sequelize.ARRAY(Sequelize.JSON),
+          type: Sequelize.ARRAY( Sequelize.JSON ),
           field: 'subjects',
         },
         startTime: {
@@ -92,13 +92,13 @@ module.exports = (sequelize, Sequelize) => {
         tableName: 'courses',
       },
   );
-  Course.associate = (models) => {
-    Course.belongsTo(models.levels, {
+  Course.associate = ( models ) => {
+    Course.belongsTo( models.levels, {
       onDelete: 'CASCADE',
       foreignKey: {
         allowNull: true,
       },
-    });
+    } );
   };
   return Course;
 };

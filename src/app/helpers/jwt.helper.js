@@ -1,11 +1,11 @@
-const jwt = require('jsonwebtoken');
-require('dotenv').config();
+const jwt = require( 'jsonwebtoken' );
+require( 'dotenv' ).config();
 
 const accessTokenLife = process.env.ACCESS_TOKEN_LIFE;
 const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET;
 
-const generateToken = (user, secretSignature, tokenLife) => {
-  return new Promise((resolve, reject) => {
+const generateToken = ( user, secretSignature, tokenLife ) => {
+  return new Promise( ( resolve, reject ) => {
     const userData = {
       id: user.id,
       name: user.name,
@@ -18,25 +18,25 @@ const generateToken = (user, secretSignature, tokenLife) => {
           algorithm: 'HS256',
           expiresIn: tokenLife || accessTokenLife,
         },
-        (error, token) => {
-          if (error) {
-            return reject(error);
+        ( error, token ) => {
+          if ( error ) {
+            return reject( error );
           }
-          resolve(token);
+          resolve( token );
         },
     );
-  });
+  } );
 };
 
-const verifyToken = (token, secretKey) => {
-  return new Promise((resolve, reject) => {
-    jwt.verify(token, secretKey, (error, decoded) => {
-      if (error) {
-        return reject(error);
+const verifyToken = ( token, secretKey ) => {
+  return new Promise( ( resolve, reject ) => {
+    jwt.verify( token, secretKey, ( error, decoded ) => {
+      if ( error ) {
+        return reject( error );
       }
-      resolve(decoded);
-    });
-  });
+      resolve( decoded );
+    } );
+  } );
 };
 
 module.exports = {

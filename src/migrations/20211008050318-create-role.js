@@ -2,8 +2,8 @@
 'use strict';
 
 module.exports = {
-  up: (migration, DataTypes) => {
-    return migration.createTable('roles', {
+  up: ( migration, DataTypes ) => {
+    return migration.createTable( 'roles', {
       id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -29,9 +29,9 @@ module.exports = {
         allowNull: true,
         field: 'updated_at',
       },
-    });
+    } );
   },
-  down: (migration, DataTypes) => {
-    return migration.dropTable('roles');
+  down: ( migration, DataTypes ) => {
+    return migration.dropTable( 'roles' );
   },
 };

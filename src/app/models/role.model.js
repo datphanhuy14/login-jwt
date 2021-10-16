@@ -1,5 +1,5 @@
-module.exports = (sequelize, Sequelize) => {
-  const Role = sequelize.define('roles', {
+module.exports = ( sequelize, Sequelize ) => {
+  const Role = sequelize.define( 'roles', {
     id: {
       type: Sequelize.INTEGER,
       autoIncrement: true,
@@ -30,8 +30,8 @@ module.exports = (sequelize, Sequelize) => {
     tableName: 'roles',
   },
   );
-  Role.associate = (models) => {
-    Role.hasMany(models.users);
+  Role.associate = ( models ) => {
+    Role.hasMany( models.users );
   };
   return Role;
 };

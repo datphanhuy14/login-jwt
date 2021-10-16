@@ -1,5 +1,5 @@
-const AuthMiddleWare = require('./auth');
+const AuthMiddleWare = require( './auth' );
 
 module.exports = {
     AuthMiddleWare
-}
+};

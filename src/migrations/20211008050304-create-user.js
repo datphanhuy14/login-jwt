@@ -1,10 +1,10 @@
 /* eslint-disable no-unused-vars */
 'use strict';
-const uuidPrimaryKey = require('../app/helpers/uuid');
+const uuidPrimaryKey = require( '../app/helpers/uuid' );
 
 module.exports = {
-  up: (migration, DataTypes) => {
-    return migration.createTable('users', {
+  up: ( migration, DataTypes ) => {
+    return migration.createTable( 'users', {
       id: uuidPrimaryKey(),
       googleId: {
         type: DataTypes.STRING,
@@ -52,9 +52,9 @@ module.exports = {
         allowNull: true,
         field: 'updated_at',
       },
-    });
+    } );
   },
-  down: (migration, DataTypes) => {
-    return migration.dropTable('users');
+  down: ( migration, DataTypes ) => {
+    return migration.dropTable( 'users' );
   },
 };

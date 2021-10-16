@@ -2,8 +2,8 @@
 'use strict';
 
 module.exports = {
-  up: (migration, DataTypes) => {
-    return migration.createTable('subjects', {
+  up: ( migration, DataTypes ) => {
+    return migration.createTable( 'subjects', {
       id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -35,7 +35,7 @@ module.exports = {
         field: 'title',
       },
       teachers: {
-        type: DataTypes.ARRAY(DataTypes.UUID),
+        type: DataTypes.ARRAY( DataTypes.UUID ),
         field: 'teachers',
       },
       active: {
@@ -54,9 +54,9 @@ module.exports = {
         allowNull: true,
         field: 'updated_at',
       },
-    });
+    } );
   },
-  down: (migration, DataTypes) => {
-    return migration.dropTable('subjects');
+  down: ( migration, DataTypes ) => {
+    return migration.dropTable( 'subjects' );
   },
 };

@@ -1,7 +1,7 @@
-const {uuidPrimaryKey} = require('../helpers');
+const {uuidPrimaryKey} = require( '../helpers' );
 
 // const db = require("../models");
-module.exports = (sequelize, Sequelize) => {
+module.exports = ( sequelize, Sequelize ) => {
   const User = sequelize.define(
       'users',
       {
@@ -55,14 +55,14 @@ module.exports = (sequelize, Sequelize) => {
         tableName: 'users',
       },
   );
-  User.associate = (models) => {
-    User.belongsTo(models.roles, {
+  User.associate = ( models ) => {
+    User.belongsTo( models.roles, {
       onDelete: 'CASCADE',
       foreignKey: {
         allowNull: true,
       },
-    });
-    User.belongsToMany(models.subjects, {through: 'user_teacher'});
+    } );
+    User.belongsToMany( models.subjects, {through: 'user_teacher'} );
   };
   return User;
 };

@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 
 // const db = require("../models");
-module.exports = (sequelize, Sequelize) => {
+module.exports = ( sequelize, Sequelize ) => {
   const Subject = sequelize.define(
       'subjects',
       {
@@ -37,7 +37,7 @@ module.exports = (sequelize, Sequelize) => {
           field: 'title',
         },
         teachers: {
-          type: Sequelize.ARRAY(Sequelize.UUID),
+          type: Sequelize.ARRAY( Sequelize.UUID ),
           field: 'teachers',
         },
         active: {
@@ -64,8 +64,8 @@ module.exports = (sequelize, Sequelize) => {
         tableName: 'subjects',
       },
   );
-  Subject.associate = (models) => {
-    Subject.belongsToMany(models.users, {through: 'user_teacher'});
+  Subject.associate = ( models ) => {
+    Subject.belongsToMany( models.users, {through: 'user_teacher'} );
   };
   return Subject;
 };

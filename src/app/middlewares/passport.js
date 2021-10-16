@@ -1,18 +1,18 @@
-const passport = require('passport');
-const FacebookStrategy = require('passport-facebook').Strategy;
-const config = require('../config/db.config');
-const GoogleStrategy = require('passport-google-oauth2').Strategy;
-const db = require('../models');
+const passport = require( 'passport' );
+const FacebookStrategy = require( 'passport-facebook' ).Strategy;
+const config = require( '../config/db.config' );
+const GoogleStrategy = require( 'passport-google-oauth2' ).Strategy;
+const db = require( '../models' );
 // const {jwtHelper} = require('../helpers')
 
 
-passport.serializeUser(function(user, cb) {
-  console.log(user);
-  cb(null, user);
-});
-passport.deserializeUser(function(user, cb) {
-  cb(null, user);
-});
+passport.serializeUser( function( user, cb ) {
+  console.log( user );
+  cb( null, user );
+} );
+passport.deserializeUser( function( user, cb ) {
+  cb( null, user );
+} );
 passport.use(
     new FacebookStrategy(
         {
@@ -21,10 +21,10 @@ passport.use(
           callbackURL: config.callbackURL,
           profileFields: ['email', 'gender', 'locale', 'displayName'],
         },
-        function(request, accessToken, refreshToken, profile, cb) {
-          process.nextTick(function() {
+        function( request, accessToken, refreshToken, profile, cb ) {
+          process.nextTick( function() {
             db.users
-                .findOrCreate({
+                .findOrCreate( {
                   where: {
                     facebookId: profile.id,
                   },
@@ -34,12 +34,12 @@ passport.use(
                     // user_fullName: profile.displayName,
                     facebookId: profile.id,
                   },
-                })
-                .then((user) => {
+                } )
+                .then( ( user ) => {
                   request.session.user = user;
-                  return cb(null, user[0]);
-                });
-          });
+                  return cb( null, user[0] );
+                } );
+          } );
         },
     ),
 );
@@ -52,10 +52,10 @@ passport.use(
           callbackURL: config.gCallbackURL,
           passReqToCallback: true,
         },
-        function(request, accessToken, refreshToken, profile, cb) {
-          process.nextTick(function() {
+        function( request, accessToken, refreshToken, profile, cb ) {
+          process.nextTick( function() {
             db.users
-                .findOrCreate({
+                .findOrCreate( {
                   where: {
                     googleId: profile.id,
                   },
@@ -65,12 +65,12 @@ passport.use(
                     // user_fullName: profile.displayName,
                     googleId: profile.id,
                   },
-                })
-                .then((user) => {
+                } )
+                .then( ( user ) => {
                   request.session.user = user;
-                  return cb(null, user[0]);
-                });
-          });
+                  return cb( null, user[0] );
+                } );
+          } );
         },
     ),
 );

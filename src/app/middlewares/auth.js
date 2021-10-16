@@ -1,12 +1,12 @@
-const { jwtHelper } = require("../helpers");
-const debug = console.log.bind(console);
+const { jwtHelper } = require( "../helpers" );
+const debug = console.log.bind( console );
 
 const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET;
-let isAuth = async (req, res, next) => {
+let isAuth = async ( req, res, next ) => {
   const tokenFromClient =
     req.body.token || req.query.token || req.headers["authorization"];
 
-  if (tokenFromClient) {
+  if ( tokenFromClient ) {
     try {
       const decoded = await jwtHelper.verifyToken(
         tokenFromClient,
@@ -14,16 +14,16 @@ let isAuth = async (req, res, next) => {
       );
       req.jwtDecoded = decoded;
       next();
-    } catch (error) {
-      debug("Error while verify token:", error);
-      return res.status(401).json({
+    } catch ( error ) {
+      debug( "Error while verify token:", error );
+      return res.status( 401 ).json( {
         message: "Unauthorized.",
-      });
+      } );
     }
   } else {
-    return res.status(403).send({
+    return res.status( 403 ).send( {
       message: "No token provided.",
-    });
+    } );
   }
 };
 
