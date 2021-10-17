@@ -1,5 +1,5 @@
-module.exports = ( sequelize, Sequelize ) => {
-  const Role = sequelize.define( 'roles', {
+module.exports = (sequelize, Sequelize) => {
+  const Role = sequelize.define('roles', {
     id: {
       type: Sequelize.INTEGER,
       autoIncrement: true,
@@ -24,14 +24,14 @@ module.exports = ( sequelize, Sequelize ) => {
       field: 'updated_at',
     },
   },
-  {
-    timestamps: true,
-    underscored: true,
-    tableName: 'roles',
-  },
+    {
+      timestamps: true,
+      underscored: true,
+      tableName: 'roles',
+    },
   );
-  Role.associate = ( models ) => {
-    Role.hasMany( models.users );
+  Role.associate = (models) => {
+    Role.hasOne(models.users);
   };
   return Role;
 };

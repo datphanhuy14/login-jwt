@@ -1,8 +1,8 @@
 import { Router } from "express";
 const router = Router();
-import { auth, user } from "../controllers";
+import { auth, user } from "../../controllers";
 import passport from "passport";
-import { jwtHelper, helper } from "../helpers";
+import { jwtHelper, helper } from "../../helpers";
 
 router.post("/login", auth.login);
 router.post("/refresh-token", auth.refreshToken);

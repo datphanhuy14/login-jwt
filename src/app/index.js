@@ -6,5 +6,5 @@ import Entity from './helpers';
 import router from './routes';
 
 export {
-    router,Helpers,Middlewares,Models,Controllers,Entity
+    router, Helpers, Middlewares, Models, Controllers, Entity
 };

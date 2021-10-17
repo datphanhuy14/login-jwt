@@ -13,8 +13,8 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+// require("./app/middlewares/passport");
 import("./app/middlewares/passport");
-
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

@@ -1,7 +1,7 @@
 import { jwtHelper } from '../helpers';
 const debug = console.log.bind( console );
 import { compareSync } from 'bcryptjs';
-import { users } from '../models';
+import db from '../models';
 import { omit } from 'lodash';
 import { helper } from '../helpers';
 require( 'dotenv' ).config();
@@ -16,7 +16,7 @@ const login = async ( req, res ) => {
     // email and password
     const email = req.body.email;
     const password = req.body.password;
-    let user = await users.findOne( {
+    let user = await db.users.findOne( {
       where: {
         email: email,
       },
@@ -88,7 +88,7 @@ const refreshToken = async ( req, res ) => {
   }
 };
 
-export {
+export default {
   login,
   refreshToken,
 };

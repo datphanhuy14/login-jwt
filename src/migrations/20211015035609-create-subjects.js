@@ -37,6 +37,7 @@ module.exports = {
       teachers: {
         type: DataTypes.ARRAY( DataTypes.UUID ),
         field: 'teachers',
+        defaultValue: []
       },
       active: {
         type: DataTypes.BOOLEAN,

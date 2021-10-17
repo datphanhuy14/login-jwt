@@ -1,11 +1,12 @@
 import { Router } from 'express';
 const router = Router();
-import loginApi from './user';
-import mainApi from './apiAuth';
+import user2 from './user/user2';
+import API from './rediriectAPI';
 import { isAuth } from '../middlewares/';
 
 /* GET home page. */
-router.use( '/auth', loginApi );
-router.use( '/api', isAuth, mainApi );
+// router.use('/dev', devApi);
+router.use('/auth', user2);
+router.use('/api', isAuth, API);
 
 export default router;

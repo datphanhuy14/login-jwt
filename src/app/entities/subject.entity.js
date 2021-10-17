@@ -1,9 +1,9 @@
 import Entity from '../entity';
-import { subjects } from '../models';
+import db from '../models';
 
 class subjectEntity extends Entity {
   constructor() {
-    super( subjects );
+    super( db.subjects );
   }
 }
 export default new subjectEntity();

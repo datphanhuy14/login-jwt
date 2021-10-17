@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-
+import models from '../models';
 // const db = require("../models");
 module.exports = (sequelize, Sequelize) => {
   const Subject = sequelize.define(
@@ -38,6 +38,7 @@ module.exports = (sequelize, Sequelize) => {
       teachers: {
         type: Sequelize.ARRAY(Sequelize.UUID),
         field: "teachers",
+        defaultValue: []
       },
       active: {
         type: Sequelize.BOOLEAN,
@@ -62,8 +63,19 @@ module.exports = (sequelize, Sequelize) => {
       tableName: "subjects",
     }
   );
-  Subject.associate = (models) => {
-    Subject.belongsToMany(models.users, { through: "user_teacher" });
-  };
+  Subject.addScope('associated', partition => {
+    {
+      return {
+        include: [
+          {
+            model: models.roles,
+          }
+        ]
+      };
+    }
+  });
+  // Subject.associate = (models) => {
+  //   Subject.belongsToMany(models.users, { through: "teacher_subjects", foreignKey: 'subject_id' });
+  // };
   return Subject;
 };

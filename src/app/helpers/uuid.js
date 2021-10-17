@@ -1,4 +1,4 @@
-const { DataTypes } = require( 'sequelize' );
+import { DataTypes } from 'sequelize';
 
 const uuidPrimaryKey = () => ( {
   type: DataTypes.UUID,
@@ -6,4 +6,4 @@ const uuidPrimaryKey = () => ( {
   primaryKey: true,
 } );
 
-module.exports = uuidPrimaryKey;
+export default uuidPrimaryKey;

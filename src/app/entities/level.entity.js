@@ -1,9 +1,9 @@
 import Entity from '../entity';
-import { levels } from '../models';
+import db from '../models';
 
 class levelEntity extends Entity {
   constructor() {
-    super( levels );
+    super( db.levels );
   }
 }
 export default new levelEntity;

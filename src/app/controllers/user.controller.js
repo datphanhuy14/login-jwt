@@ -1,16 +1,16 @@
-import { users, user as __user, roles } from '../models';
-import { hashSync, genSaltSync } from 'bcryptjs';
-import { omit } from 'lodash';
-import { helper } from '../helpers';
+const db = require('../models');
+const bcrypt = require( 'bcryptjs' );
+const _ = require( 'lodash' );
+const {helper} = require( '../helpers' );
 
 const createUser = async ( req, res ) => {
   try {
-    const check = await users.findOne( {where: {email: req.body.email}} );
+    const check = await db.users.findOne( {where: {email: req.body.email}} );
     if ( check ) res.status( 401 ).json( {msg: 'email is valid'} );
     else {
-      const createUser = await users.create( {
+      const createUser = await db.users.create( {
         ...req.body,
-        password: hashSync( req.body.password, genSaltSync( 10 ) ),
+        password: bcrypt.hashSync( req.body.password, bcrypt.genSaltSync( 10 ) ),
       } );
       res.json( helper.formatOutputData( createUser, '{{common.success}}' ) );
     }
@@ -19,20 +19,20 @@ const createUser = async ( req, res ) => {
   }
 };
 const list = async ( req, res ) => {
-  const user = await __user.findAll();
+  const user = await db.user.findAll();
   const data = [];
   user.map( remove );
   function remove( _user ) {
-    _user = omit( _user, ['password'] );
+    _user = _.omit( _user, ['password'] );
     data.push( _user );
   }
   res.json( helper.formatOutputData( data, '{{common.success}}' ) );
 };
 const list2 = async ( req, res ) => {
-  const user = await users.findAll(
+  const user = await db.users.findAll(
       {
         include: {
-          model: roles,
+          model: db.roles,
         },
       },
       {raw: true},
@@ -42,18 +42,10 @@ const list2 = async ( req, res ) => {
   data.forEach( ( element ) => {
     delete element.password;
   } );
-
-  // delete data.password;
-  // let data = [];
-  // user.map(remove);
-  // function remove(_user) {
-  //   _user = _.omit(_user, ["password"]);
-  //   data.push(_user);
-  // }
   res.json( helper.formatOutputData( data, '{{common.success}}' ) );
 };
 
-export {
+module.exports = {
   list,
   createUser,
   list2,

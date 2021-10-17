@@ -60,16 +60,18 @@ passport.use(
     },
     function (request, accessToken, refreshToken, profile, cb) {
       process.nextTick(function () {
+        console.log(1234);
         db.users
           .findOrCreate({
             where: {
-              googleId: profile.id,
+              email: profile.email,
             },
             defaults: {
               email: profile._json.email,
               fullname: profile.displayName,
               // user_fullName: profile.displayName,
               googleId: profile.id,
+              roleId: 0
             },
           })
           .then((user) => {

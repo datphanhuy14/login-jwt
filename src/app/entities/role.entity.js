@@ -1,9 +1,9 @@
 import Entity from '../entity';
-import { roles } from '../models';
+import db from '../models';
 
 class roleEntity extends Entity {
   constructor() {
-    super( roles );
+    super( db.roles );
   }
 }
 export default new roleEntity;

@@ -1,5 +1,5 @@
 const { uuidPrimaryKey } = require("../helpers");
-
+import models from '../models';
 // const db = require("../models");
 module.exports = (sequelize, Sequelize) => {
   const User = sequelize.define(
@@ -55,6 +55,17 @@ module.exports = (sequelize, Sequelize) => {
       tableName: "users",
     }
   );
+  User.addScope('associated', partition => {
+    {
+      return {
+        include: [
+          {
+            model: models.roles,
+          }
+        ]
+      };
+    }
+  });
   User.associate = (models) => {
     User.belongsTo(models.roles, {
       onDelete: "CASCADE",
@@ -62,7 +73,7 @@ module.exports = (sequelize, Sequelize) => {
         allowNull: true,
       },
     });
-    User.belongsToMany(models.subjects, { through: "user_teacher" });
+    User.belongsToMany(models.subjects, { through: "teacher_subjects", foreignKey: 'teacher_id' });
   };
   return User;
 };
