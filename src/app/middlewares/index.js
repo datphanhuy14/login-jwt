@@ -1,3 +1,3 @@
-import isAuth from './auth';
+import {isAuth,isAdmin} from './auth';
 
-export {isAuth} ;
+export {isAuth,isAdmin} ;

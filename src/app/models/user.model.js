@@ -55,7 +55,7 @@ module.exports = (sequelize, Sequelize) => {
       tableName: "users",
     }
   );
-  User.addScope('associated', partition => {
+  User.addScope('associated', (partition) => {
     {
       return {
         include: [

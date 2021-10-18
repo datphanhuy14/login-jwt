@@ -1,6 +1,8 @@
 import { userEntity as selfEntity } from '../../entities/';
 import { Router } from 'express';
 import passport from "passport";
+import { auth } from "../../controllers";
+import { isAdmin, isAuth } from '../../middlewares';
 import { jwtHelper, helper } from "../../helpers";
 
 class Controller {
@@ -11,17 +13,19 @@ class Controller {
         router
             .route('/')
             .get(this.list)
-            .post(this.create);
-
+            .post(isAdmin, this.create);
+        router
+            .post("/login", auth.login);
         router
             .route('/:id(\\d+)/')
             .get(this.read)
             .put(this.update)
             .delete(this.remove);
-        router.get(
-            "/google",
-            passport.authenticate("google", { scope: ["email", "profile"] })
-        );
+        router
+            .get(
+                "/google",
+                passport.authenticate("google", { scope: ["email", "profile"] })
+            );
         router
             .get(
                 "/google/callback",

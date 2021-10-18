@@ -2,7 +2,7 @@ import express from "express";
 import cookieParser from "cookie-parser";
 import logger from "morgan";
 require("dotenv").config();
-import { router as Router, Models as db } from "./app/";
+import { Router, Models as db } from "./app/";
 const app = express();
 import session from "express-session";
 import passport from "passport";

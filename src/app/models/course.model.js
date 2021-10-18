@@ -95,7 +95,7 @@ module.exports = (sequelize, Sequelize) => {
       tableName: 'courses',
     },
   );
-  Course.addScope('associated', partition => {
+  Course.addScope('associated', (partition) => {
     {
       return {
         include: [
@@ -110,6 +110,7 @@ module.exports = (sequelize, Sequelize) => {
     Course.belongsTo(models.levels, {
       onDelete: 'CASCADE',
       foreignKey: {
+        field: 'levelId',
         allowNull: true,
       },
     });

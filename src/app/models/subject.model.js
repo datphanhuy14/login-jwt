@@ -63,12 +63,12 @@ module.exports = (sequelize, Sequelize) => {
       tableName: "subjects",
     }
   );
-  Subject.addScope('associated', partition => {
+  Subject.addScope('associated', (partition) => {
     {
       return {
         include: [
           {
-            model: models.roles,
+            model: models.users,
           }
         ]
       };
