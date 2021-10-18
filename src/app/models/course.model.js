@@ -35,11 +35,6 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING,
         field: "title",
       },
-      levelId: {
-        type: Sequelize.INTEGER,
-        allowNull: true,
-        field: 'level_id',
-      },
       teachers: {
         type: Sequelize.ARRAY(Sequelize.UUID),
         field: "teachers",
@@ -65,7 +60,7 @@ module.exports = (sequelize, Sequelize) => {
     {
       timestamps: true,
       underscored: true,
-      tableName: "courses",
+      tableName: "subjects",
     }
   );
   Course.addScope('associated', (partition) => {
@@ -73,7 +68,7 @@ module.exports = (sequelize, Sequelize) => {
       return {
         include: [
           {
-            model: models.levels,
+            model: models.rates,
           }
         ]
       };
@@ -81,11 +76,10 @@ module.exports = (sequelize, Sequelize) => {
   });
 
   Course.associate = (models) => {
-    Course.belongsTo(models.levels, {
+    Course.belongsTo(models.rates, {
       onDelete: 'CASCADE',
       foreignKey: {
-        field: 'levelId',
-        allowNull: true,
+        field: 'course_id',
       },
     });
   };

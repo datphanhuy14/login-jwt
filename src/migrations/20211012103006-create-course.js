@@ -34,11 +34,6 @@ module.exports = {
         type: DataTypes.STRING,
         field: "title",
       },
-      levelId: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-        field: 'level_id',
-      },
       teachers: {
         type: DataTypes.ARRAY(DataTypes.UUID),
         field: "teachers",

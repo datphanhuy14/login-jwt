@@ -2,8 +2,8 @@
 'use strict';
 
 module.exports = {
-  up: ( migration, DataTypes ) => {
-    return migration.createTable( 'levels', {
+  up: (migration, DataTypes) => {
+    return migration.createTable('rates', {
       id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -34,9 +34,9 @@ module.exports = {
         allowNull: true,
         field: 'updated_at',
       },
-    } );
+    });
   },
-  down: ( migration, DataTypes ) => {
-    return migration.dropTable( 'levels' );
+  down: (migration, DataTypes) => {
+    return migration.dropTable('rates');
   },
 };

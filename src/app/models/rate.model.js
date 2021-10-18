@@ -1,24 +1,25 @@
 module.exports = (sequelize, Sequelize) => {
-  const Level = sequelize.define('levels', {
+  const Rate = sequelize.define('rates', {
     id: {
       type: Sequelize.INTEGER,
       primaryKey: true,
       unique: true,
       autoIncrement: true,
     },
-    code: {
+    userId: {
       type: Sequelize.STRING,
-      field: 'code',
+      field: 'user_id',
     },
-    title: {
+    subjectId: {
       type: Sequelize.STRING,
-      field: 'title',
+      field: 'subject_id',
     },
-    active: {
+    rating: {
       type: Sequelize.BOOLEAN,
-      field: 'active',
+      field: 'rating',
       defaultValue: true,
     },
+
     createdAt: {
       type: Sequelize.DATE,
       allowNull: true,
@@ -34,12 +35,14 @@ module.exports = (sequelize, Sequelize) => {
     {
       timestamps: true,
       underscored: true,
-      tableName: 'levels',
+      tableName: 'rating',
     },
   );
-  Level.associate = (models) => {
-    Level.hasOne(models.courses);
+  Rate.associate = (models) => {
+    Rate.hasOne(models.subjects);
+    Rate.hasOne(models.users);
   };
-  return Level;
+
+  return Rate;
 };
 

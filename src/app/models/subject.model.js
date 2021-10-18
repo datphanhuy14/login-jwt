@@ -102,6 +102,7 @@ module.exports = (sequelize, Sequelize) => {
     }
   });
   Subject.associate = (models) => {
-  return Subject;
   };
+  return Subject;
+
 };
