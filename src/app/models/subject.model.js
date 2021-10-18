@@ -1,9 +1,11 @@
 /* eslint-disable no-unused-vars */
-import models from '../models';
-// const db = require("../models");
+
+// const models = require("../models");
+import models from ".";
+
 module.exports = (sequelize, Sequelize) => {
   const Subject = sequelize.define(
-    "subjects",
+    'subjects',
     {
       id: {
         type: Sequelize.INTEGER,
@@ -11,57 +13,82 @@ module.exports = (sequelize, Sequelize) => {
         unique: true,
         autoIncrement: true,
       },
-      content1: {
+      title: {
         type: Sequelize.STRING,
-        field: "content_1",
-      },
-      content2: {
-        type: Sequelize.STRING,
-        field: "content_2",
-      },
-      content3: {
-        type: Sequelize.STRING,
-        field: "content_3",
+        allowNull: false,
+        field: 'title',
       },
       code: {
         type: Sequelize.STRING,
-        field: "code",
+        field: 'code',
       },
-      credits: {
+      creditFee: {
         type: Sequelize.INTEGER,
-        field: "credits",
+        field: 'credit_fee',
       },
-      title: {
+      registrationFee: {
+        type: Sequelize.INTEGER,
+        field: 'registration_fee',
+      },
+      content1: {
         type: Sequelize.STRING,
-        field: "title",
+        allowNull: true,
+        field: 'content_1',
       },
-      teachers: {
-        type: Sequelize.ARRAY(Sequelize.UUID),
-        field: "teachers",
-        defaultValue: []
+      content2: {
+        type: Sequelize.STRING,
+        allowNull: true,
+        field: 'content_2',
+      },
+      content3: {
+        type: Sequelize.STRING,
+        allowNull: true,
+        field: 'content_3',
       },
       active: {
         type: Sequelize.BOOLEAN,
-        field: "status",
+        field: 'active',
         defaultValue: true,
+      },
+      image: {
+        type: Sequelize.STRING,
+        field: 'image',
+      },
+      credits: {
+        type: Sequelize.INTEGER,
+        field: 'credits',
+      },
+      subjects: {
+        type: Sequelize.ARRAY(Sequelize.JSON),
+        field: 'subjects',
+        defaultValue: []
+      },
+      startTime: {
+        type: Sequelize.DATE,
+        allowNull: true,
+        field: 'start_time',
+      },
+      endTime: {
+        type: Sequelize.DATE,
+        allowNull: true,
+        field: 'end_time',
       },
       createdAt: {
         type: Sequelize.DATE,
         allowNull: true,
-        field: "created_at",
+        field: 'created_at',
       },
-
       updatedAt: {
         type: Sequelize.DATE,
         allowNull: true,
-        field: "updated_at",
+        field: 'updated_at',
       },
     },
     {
       timestamps: true,
       underscored: true,
-      tableName: "subjects",
-    }
+      tableName: 'subjects',
+    },
   );
   Subject.addScope('associated', (partition) => {
     {
@@ -74,8 +101,7 @@ module.exports = (sequelize, Sequelize) => {
       };
     }
   });
-  // Subject.associate = (models) => {
-  //   Subject.belongsToMany(models.users, { through: "teacher_subjects", foreignKey: 'subject_id' });
-  // };
+  Subject.associate = (models) => {
   return Subject;
+  };
 };

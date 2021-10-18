@@ -10,82 +10,55 @@ module.exports = {
         unique: true,
         autoIncrement: true,
       },
-      title: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        field: 'title',
-      },
-      code: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        field: 'code',
-      },
-      creditFee: {
-        type: DataTypes.INTEGER,
-        field: 'credit_fee',
-      },
-      registrationFee: {
-        type: DataTypes.INTEGER,
-        field: 'registration_fee',
-      },
       content1: {
         type: DataTypes.STRING,
-        allowNull: true,
-        field: 'content_1',
+        field: "content_1",
       },
       content2: {
         type: DataTypes.STRING,
-        allowNull: true,
-        field: 'content_2',
+        field: "content_2",
       },
       content3: {
         type: DataTypes.STRING,
-        allowNull: true,
-        field: 'content_3',
+        field: "content_3",
       },
-      active: {
-        type: DataTypes.BOOLEAN,
-        field: 'active',
-        defaultValue: true,
-      },
-      image: {
+      code: {
         type: DataTypes.STRING,
-        field: 'image',
+        field: "code",
+      },
+      credits: {
+        type: DataTypes.INTEGER,
+        field: "credits",
+      },
+      title: {
+        type: DataTypes.STRING,
+        field: "title",
       },
       levelId: {
         type: DataTypes.INTEGER,
         allowNull: true,
         field: 'level_id',
       },
-      credits: {
-        type: DataTypes.INTEGER,
-        field: 'credits',
+      teachers: {
+        type: DataTypes.ARRAY(DataTypes.UUID),
+        field: "teachers",
+        defaultValue: []
       },
-      subjects: {
-        type: DataTypes.ARRAY(DataTypes.JSON),
-        allowNull: true,
-        defaultValue: [],
-        field: 'subjects',
-      },
-      startTime: {
-        type: DataTypes.DATE,
-        allowNull: true,
-        field: 'start_time',
-      },
-      endTime: {
-        type: DataTypes.DATE,
-        allowNull: true,
-        field: 'end_time',
+      active: {
+        type: DataTypes.BOOLEAN,
+        field: "status",
+        defaultValue: true,
       },
       createdAt: {
         type: DataTypes.DATE,
         allowNull: true,
-        field: 'created_at',
+        field: "created_at",
       },
+
       updatedAt: {
         type: DataTypes.DATE,
         allowNull: true,
-        field: 'updated_at',
+        field: "updated_at",
       },
     });
   },

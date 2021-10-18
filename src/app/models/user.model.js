@@ -73,7 +73,7 @@ module.exports = (sequelize, Sequelize) => {
         allowNull: true,
       },
     });
-    User.belongsToMany(models.subjects, { through: "teacher_subjects", foreignKey: 'teacher_id' });
+    // User.belongsToMany(models.subjects, { through: "teacher_subjects", foreignKey: 'teacher_id' });
   };
   return User;
 };

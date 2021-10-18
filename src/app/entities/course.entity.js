@@ -1,6 +1,7 @@
 const Entity = require('../entity').default;
 const models = require('../models').default;
 import { helper } from '../helpers';
+import { subjectEntity } from '../entities';
 
 
 class courseEntity extends Entity {
@@ -10,7 +11,7 @@ class courseEntity extends Entity {
   list(options = {}) {
     return new Promise(async (resolve, reject) => {
       try {
-        await this._model.scope("associated").findAndCountAll(options).then((record) => {
+        await this._model.scope("associated").findAndCountAll(options).then(async (record) => {
           if (record) {
             record = JSON.parse(JSON.stringify(record));
             return resolve(record);
