@@ -19,14 +19,6 @@ module.exports = {
         type: DataTypes.STRING,
         field: 'code',
       },
-      creditFee: {
-        type: DataTypes.INTEGER,
-        field: 'credit_fee',
-      },
-      registrationFee: {
-        type: DataTypes.INTEGER,
-        field: 'registration_fee',
-      },
       content1: {
         type: DataTypes.STRING,
         allowNull: true,
@@ -50,25 +42,6 @@ module.exports = {
       image: {
         type: DataTypes.STRING,
         field: 'image',
-      },
-      credits: {
-        type: DataTypes.INTEGER,
-        field: 'credits',
-      },
-      subjects: {
-        type: DataTypes.ARRAY(DataTypes.JSON),
-        field: 'subjects',
-        defaultValue: []
-      },
-      startTime: {
-        type: DataTypes.DATE,
-        allowNull: true,
-        field: 'start_time',
-      },
-      endTime: {
-        type: DataTypes.DATE,
-        allowNull: true,
-        field: 'end_time',
       },
       createdAt: {
         type: DataTypes.DATE,

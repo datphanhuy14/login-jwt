@@ -9,10 +9,6 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.STRING,
       field: 'name',
     },
-    description: {
-      type: Sequelize.STRING,
-      field: 'description',
-    },
     createdAt: {
       type: Sequelize.DATE,
       allowNull: true,

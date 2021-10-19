@@ -7,19 +7,21 @@ module.exports = (sequelize, Sequelize) => {
       autoIncrement: true,
     },
     userId: {
+      type: Sequelize.UUID,
+      field: 'user_id'
+    },
+    courseId: {
+      type: Sequelize.INTEGER,
+      field: 'course_id'
+    },
+    title: {
       type: Sequelize.STRING,
-      field: 'user_id',
+      field: 'title',
     },
-    subjectId: {
+    description: {
       type: Sequelize.STRING,
-      field: 'subject_id',
+      field: 'description',
     },
-    rating: {
-      type: Sequelize.BOOLEAN,
-      field: 'rating',
-      defaultValue: true,
-    },
-
     createdAt: {
       type: Sequelize.DATE,
       allowNull: true,
@@ -35,12 +37,12 @@ module.exports = (sequelize, Sequelize) => {
     {
       timestamps: true,
       underscored: true,
-      tableName: 'rating',
+      tableName: 'rates',
     },
   );
   Rate.associate = (models) => {
-    Rate.hasOne(models.subjects);
-    Rate.hasOne(models.users);
+    Rate.belongsTo(models.courses);
+    Rate.belongsTo(models.users);
   };
 
   return Rate;

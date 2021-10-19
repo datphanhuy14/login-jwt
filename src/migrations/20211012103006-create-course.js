@@ -26,18 +26,13 @@ module.exports = {
         type: DataTypes.STRING,
         field: "code",
       },
-      credits: {
+      registrationFee: {
         type: DataTypes.INTEGER,
-        field: "credits",
+        field: 'registration_fee',
       },
       title: {
         type: DataTypes.STRING,
         field: "title",
-      },
-      teachers: {
-        type: DataTypes.ARRAY(DataTypes.UUID),
-        field: "teachers",
-        defaultValue: []
       },
       active: {
         type: DataTypes.BOOLEAN,
@@ -49,7 +44,6 @@ module.exports = {
         allowNull: true,
         field: "created_at",
       },
-
       updatedAt: {
         type: DataTypes.DATE,
         allowNull: true,

@@ -3,7 +3,7 @@
 
 module.exports = {
   up: (migration, DataTypes) => {
-    return migration.createTable('rates', {
+    return migration.createTable('user_courses', {
       id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -18,28 +18,23 @@ module.exports = {
         type: DataTypes.INTEGER,
         field: 'course_id'
       },
-      title: {
+      type: {
         type: DataTypes.STRING,
-        field: 'title',
-      },
-      description: {
-        type: DataTypes.STRING,
-        field: 'description',
+        field: 'type'
       },
       createdAt: {
         type: DataTypes.DATE,
         allowNull: true,
-        field: 'created_at',
+        field: "created_at",
       },
-
       updatedAt: {
         type: DataTypes.DATE,
         allowNull: true,
-        field: 'updated_at',
+        field: "updated_at",
       },
     });
   },
   down: (migration, DataTypes) => {
-    return migration.dropTable('rates');
+    return migration.dropTable('user_courses');
   },
 };

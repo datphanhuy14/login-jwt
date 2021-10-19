@@ -27,18 +27,13 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING,
         field: "code",
       },
-      credits: {
+      registrationFee: {
         type: Sequelize.INTEGER,
-        field: "credits",
+        field: 'registration_fee',
       },
       title: {
         type: Sequelize.STRING,
         field: "title",
-      },
-      teachers: {
-        type: Sequelize.ARRAY(Sequelize.UUID),
-        field: "teachers",
-        defaultValue: []
       },
       active: {
         type: Sequelize.BOOLEAN,
@@ -60,7 +55,7 @@ module.exports = (sequelize, Sequelize) => {
     {
       timestamps: true,
       underscored: true,
-      tableName: "subjects",
+      tableName: "courses",
     }
   );
   Course.addScope('associated', (partition) => {
@@ -69,6 +64,22 @@ module.exports = (sequelize, Sequelize) => {
         include: [
           {
             model: models.rates,
+            attributes: [
+              "userId",
+              "courseId",
+              "title",
+              "description",
+            ]
+
+
+          },
+          {
+            model: models.userCourses,
+            attributes: [
+              "userId",
+              "courseId",
+              "type"
+            ]
           }
         ]
       };
@@ -76,7 +87,13 @@ module.exports = (sequelize, Sequelize) => {
   });
 
   Course.associate = (models) => {
-    Course.belongsTo(models.rates, {
+    Course.hasMany(models.rates, {
+      onDelete: 'CASCADE',
+      foreignKey: {
+        field: 'course_id',
+      },
+    });
+    Course.hasMany(models.userCourses, {
       onDelete: 'CASCADE',
       foreignKey: {
         field: 'course_id',

@@ -14,10 +14,6 @@ module.exports = {
         type: DataTypes.STRING,
         field: 'name',
       },
-      description: {
-        type: DataTypes.STRING,
-        field: 'description',
-      },
       createdAt: {
         type: DataTypes.DATE,
         allowNull: true,

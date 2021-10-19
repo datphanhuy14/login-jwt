@@ -28,6 +28,26 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING,
         allowNull: true,
       },
+      tel: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        field: 'tel'
+      },
+      avatar: {
+        type: Sequelize.STRING,
+        allowNull: true,
+        field: 'avatar'
+      },
+      dateOfBirth: {
+        type: Sequelize.DATE,
+        allowNull: true,
+        field: 'date_of_birth'
+      },
+      displayName: {
+        type: Sequelize.STRING,
+        allowNull: true,
+        field: 'display_name'
+      },
       active: {
         type: Sequelize.BOOLEAN,
         defaultValue: true,
@@ -61,7 +81,8 @@ module.exports = (sequelize, Sequelize) => {
         include: [
           {
             model: models.roles,
-          }
+          },
+          {model: models.rates}
         ]
       };
     }
@@ -73,7 +94,7 @@ module.exports = (sequelize, Sequelize) => {
         allowNull: true,
       },
     });
-    // User.belongsToMany(models.subjects, { through: "teacher_subjects", foreignKey: 'teacher_id' });
+    User.hasMany(models.rates, {  foreignKey: 'user_id' });
   };
   return User;
 };

@@ -22,14 +22,6 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING,
         field: 'code',
       },
-      creditFee: {
-        type: Sequelize.INTEGER,
-        field: 'credit_fee',
-      },
-      registrationFee: {
-        type: Sequelize.INTEGER,
-        field: 'registration_fee',
-      },
       content1: {
         type: Sequelize.STRING,
         allowNull: true,
@@ -54,25 +46,6 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING,
         field: 'image',
       },
-      credits: {
-        type: Sequelize.INTEGER,
-        field: 'credits',
-      },
-      subjects: {
-        type: Sequelize.ARRAY(Sequelize.JSON),
-        field: 'subjects',
-        defaultValue: []
-      },
-      startTime: {
-        type: Sequelize.DATE,
-        allowNull: true,
-        field: 'start_time',
-      },
-      endTime: {
-        type: Sequelize.DATE,
-        allowNull: true,
-        field: 'end_time',
-      },
       createdAt: {
         type: Sequelize.DATE,
         allowNull: true,
@@ -90,19 +63,19 @@ module.exports = (sequelize, Sequelize) => {
       tableName: 'subjects',
     },
   );
-  Subject.addScope('associated', (partition) => {
-    {
-      return {
-        include: [
-          {
-            model: models.users,
-          }
-        ]
-      };
-    }
-  });
-  Subject.associate = (models) => {
-  };
+  // Subject.addScope('associated', (partition) => {
+  //   {
+  //     return {
+  //       include: [
+  //         {
+  //           model: models.users,
+  //         }
+  //       ]
+  //     };
+  //   }
+  // });
+  // Subject.associate = (models) => {
+  // };
   return Subject;
 
 };
