@@ -19,10 +19,17 @@ module.exports = (sequelize, Sequelize) => {
       fullname: {
         type: Sequelize.STRING,
         allowNull: false,
+        field: 'fullname'
       },
       email: {
         type: Sequelize.STRING,
         unique: true,
+        validate: {
+          isEmail: {
+            args: true,
+            msg: "user.validate.invalidEmail"
+          }
+        }
       },
       password: {
         type: Sequelize.STRING,
@@ -82,7 +89,9 @@ module.exports = (sequelize, Sequelize) => {
           {
             model: models.roles,
           },
-          {model: models.rates}
+          {
+            model: models.rates
+          }
         ]
       };
     }
@@ -91,10 +100,10 @@ module.exports = (sequelize, Sequelize) => {
     User.belongsTo(models.roles, {
       onDelete: "CASCADE",
       foreignKey: {
-        allowNull: true,
+        filed: 'roleId',
       },
     });
-    User.hasMany(models.rates, {  foreignKey: 'user_id' });
+    User.hasMany(models.rates, { foreignKey: 'user_id' });
   };
   return User;
 };

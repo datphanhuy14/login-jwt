@@ -16,7 +16,11 @@ module.exports = (sequelize, Sequelize) => {
     },
     type: {
       type: Sequelize.STRING,
-      field: 'type'
+      field: 'type',
+      isIn: {
+        args: [['Student', 'Teacher']],
+        msg: 'userCourse.validation.typeInvalid'
+      },
     },
     createdAt: {
       type: Sequelize.DATE,

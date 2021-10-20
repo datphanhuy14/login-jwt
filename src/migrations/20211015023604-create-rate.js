@@ -18,9 +18,9 @@ module.exports = {
         type: DataTypes.INTEGER,
         field: 'course_id'
       },
-      title: {
-        type: DataTypes.STRING,
-        field: 'title',
+      rating: {
+        type: DataTypes.INTEGER,
+        field: 'rating',
       },
       description: {
         type: DataTypes.STRING,

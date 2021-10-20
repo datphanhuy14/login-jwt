@@ -14,9 +14,16 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.INTEGER,
       field: 'course_id'
     },
-    title: {
-      type: Sequelize.STRING,
-      field: 'title',
+    rating: {
+      type: Sequelize.INTEGER,
+      validate: {
+        isIn: {
+          args: [[1, 2, 3, 4, 5]],
+          msg: 'rating.validation.mustBeBetween1To5'
+        },
+      },
+      field: 'rating',
+
     },
     description: {
       type: Sequelize.STRING,

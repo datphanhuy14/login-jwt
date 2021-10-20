@@ -67,7 +67,7 @@ module.exports = (sequelize, Sequelize) => {
             attributes: [
               "userId",
               "courseId",
-              "title",
+              "rating",
               "description",
             ]
 
