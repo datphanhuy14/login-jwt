@@ -2,6 +2,13 @@ import Entity from '../entity';
 import db from '../models';
 import * as bcrypt from 'bcryptjs';
 import { helper } from '../helpers';
+import { jwtHelper } from '../helpers';
+const debug = console.log.bind(console);
+import { compareSync } from 'bcryptjs';
+import { omit } from 'lodash';
+import * as conf from '../config/jwt.config';
+const tokenList = {};
+
 
 
 class userEntity extends Entity {
@@ -52,5 +59,84 @@ class userEntity extends Entity {
       }
     });
   }
+  async login(params) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        // email and password
+        const email = params.email;
+        const password = params.password;
+        let user = await db.users.findOne({
+          where: {
+            email: email,
+          },
+          raw: true,
+        });
+        if (!user) {
+          reject({
+            message: '{{User not exist}}',
+          });
+        }
+        const comparePass = compareSync(password, user.password);
+        if (!comparePass) {
+          reject({
+            message: '{{Password incorrect}}',
+          });
+        }
+        const accessToken = await jwtHelper.generateToken(
+          user,
+          conf.accessTokenSecret,
+          conf.accessTokenLife,
+        );
+        const refreshToken = await jwtHelper.generateToken(
+          user,
+          conf.refreshTokenSecret,
+          conf.refreshTokenLife,
+        );
+
+        tokenList[refreshToken] = { accessToken, refreshToken };
+        user = omit(user, ['password']);
+        return resolve({ user, accessToken, refreshToken });
+      } catch (error) {
+        return reject(helper.displayErrorMessage(error));
+      }
+    });
+  }
+
+  async refreshToken(params) {
+    return new Promise(async (resolve, reject) => {
+      const refreshTokenFromClient = params.refreshToken;
+      try {
+        if (refreshTokenFromClient && tokenList[refreshTokenFromClient]) {
+
+          const decoded = await jwtHelper.verifyToken(
+            refreshTokenFromClient,
+            conf.refreshTokenSecret,
+          );
+          const user = decoded.data;
+          const accessToken = await jwtHelper.generateToken(
+            user,
+            conf.accessTokenSecret,
+            conf.accessTokenLife,
+          );
+          resolve(accessToken);
+        }
+        else {
+          return reject(
+            helper.displayErrorMessage({
+              message: 'No token provided.',
+            }),
+          );
+        }
+      }
+      catch (error) {
+        debug(error);
+        return reject(
+          helper.displayErrorMessage(error),
+        );
+      }
+    });
+
+  }
+
 }
 export default new userEntity;

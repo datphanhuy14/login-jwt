@@ -1,10 +1,10 @@
-import Controllers from './controllers';
+// import Controllers from './controllers';
 import Models from './models';
 import Middlewares from './middlewares';
 import Helpers from './helpers';
 import Entity from './helpers';
-import Router from './routes';
+import Router from './controllers';
 
 export {
-    Router, Helpers, Middlewares, Models, Controllers, Entity
+    Router, Helpers, Middlewares, Models, Entity
 };

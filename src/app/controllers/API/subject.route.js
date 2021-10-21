@@ -1,6 +1,6 @@
 // const {restRoutes} = require('../../helpers');
 // const {level} = require('../../controllers');
-import { subjectEntity as selfEntity } from "../../entities/";
+import { subjectEntity as selfEntity } from "../../entities";
 import { Router } from "express";
 import { helper } from "../../helpers";
 

@@ -1,7 +1,7 @@
-const Entity = require('../entity').default;
-const models = require('../models').default;
+import Entity from '../entity';
+import models from '../models';
 import { helper } from '../helpers';
-import { subjectEntity } from '../entities';
+// import { subjectEntity } from '../entities';
 
 
 class courseEntity extends Entity {
@@ -26,4 +26,4 @@ class courseEntity extends Entity {
     });
   }
 }
-module.exports = new courseEntity;
+export default new courseEntity;
