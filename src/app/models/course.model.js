@@ -37,7 +37,7 @@ module.exports = (sequelize, Sequelize) => {
       },
       active: {
         type: Sequelize.BOOLEAN,
-        field: "status",
+        field: "active",
         defaultValue: true,
       },
       createdAt: {
@@ -45,7 +45,6 @@ module.exports = (sequelize, Sequelize) => {
         allowNull: true,
         field: "created_at",
       },
-
       updatedAt: {
         type: Sequelize.DATE,
         allowNull: true,
@@ -80,6 +79,14 @@ module.exports = (sequelize, Sequelize) => {
               "courseId",
               "type"
             ]
+          },
+          {
+            model: models.subjects,
+            attributes: [
+              "id",
+              "title",
+              "code"
+            ]
           }
         ]
       };
@@ -97,6 +104,12 @@ module.exports = (sequelize, Sequelize) => {
       onDelete: 'CASCADE',
       foreignKey: {
         field: 'course_id',
+      },
+    });
+    Course.belongsTo(models.subjects, {
+      onDelete: 'CASCADE',
+      foreignKey: {
+        field: 'subject_id',
       },
     });
   };

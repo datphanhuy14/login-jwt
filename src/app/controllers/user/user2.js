@@ -198,5 +198,4 @@ class Controller {
     }
 }
 
-// const routes = restRoutes(level);
 export default new Controller;

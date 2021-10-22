@@ -36,7 +36,7 @@ module.exports = {
       },
       active: {
         type: DataTypes.BOOLEAN,
-        field: "status",
+        field: "active",
         defaultValue: true,
       },
       createdAt: {

@@ -100,7 +100,7 @@ module.exports = (sequelize, Sequelize) => {
     User.belongsTo(models.roles, {
       onDelete: "CASCADE",
       foreignKey: {
-        filed: 'roleId',
+        filed: 'role_id',
       },
     });
     User.hasMany(models.rates, { foreignKey: 'user_id' });

@@ -27,7 +27,7 @@ module.exports = (sequelize, Sequelize) => {
     },
   );
   Role.associate = (models) => {
-    Role.hasOne(models.users);
+    Role.hasMany(models.users);
   };
   return Role;
 };

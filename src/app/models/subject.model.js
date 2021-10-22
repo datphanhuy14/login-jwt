@@ -74,8 +74,9 @@ module.exports = (sequelize, Sequelize) => {
   //     };
   //   }
   // });
-  // Subject.associate = (models) => {
-  // };
+  Subject.associate = (models) => {
+    Subject.hasMany(models.courses);
+  };
   return Subject;
 
 };
