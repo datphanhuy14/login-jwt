@@ -1,51 +1,51 @@
 module.exports = (sequelize, Sequelize) => {
-  const userCourse = sequelize.define('userCourses', {
-    id: {
-      type: Sequelize.INTEGER,
-      primaryKey: true,
-      unique: true,
-      autoIncrement: true,
+    const userCourse = sequelize.define('userCourses', {
+        id: {
+            type: Sequelize.INTEGER,
+            primaryKey: true,
+            unique: true,
+            autoIncrement: true,
+        },
+        userId: {
+            type: Sequelize.UUID,
+            field: 'user_id'
+        },
+        courseId: {
+            type: Sequelize.INTEGER,
+            field: 'course_id'
+        },
+        type: {
+            type: Sequelize.STRING,
+            field: 'type',
+            isIn: {
+                args: [['Student', 'Teacher']],
+                msg: 'userCourse.validation.typeInvalid'
+            },
+        },
+        createdAt: {
+            type: Sequelize.DATE,
+            allowNull: true,
+            field: "created_at",
+        },
+        updatedAt: {
+            type: Sequelize.DATE,
+            allowNull: true,
+            field: "updated_at",
+        },
     },
-    userId: {
-      type: Sequelize.UUID,
-      field: 'user_id'
-    },
-    courseId: {
-      type: Sequelize.INTEGER,
-      field: 'course_id'
-    },
-    type: {
-      type: Sequelize.STRING,
-      field: 'type',
-      isIn: {
-        args: [['Student', 'Teacher']],
-        msg: 'userCourse.validation.typeInvalid'
-      },
-    },
-    createdAt: {
-      type: Sequelize.DATE,
-      allowNull: true,
-      field: "created_at",
-    },
-    updatedAt: {
-      type: Sequelize.DATE,
-      allowNull: true,
-      field: "updated_at",
-    },
-  },
     {
-      timestamps: true,
-      underscored: true,
-      tableName: 'user_courses',
+        timestamps: true,
+        underscored: true,
+        tableName: 'user_courses',
     },
-  );
-  userCourse.associate = (models) => {
-    userCourse.belongsTo(models.courses, {
-      onDelete: "CASCADE",
-      foreignKey: {
-        allowNull: true,
-      },
-    });
+    );
+    userCourse.associate = (models) => {
+        userCourse.belongsTo(models.courses, {
+            onDelete: "CASCADE",
+            foreignKey: {
+                allowNull: true,
+            },
+        });
     // userCourse.belongsToMany(models.users, {
     //   onDelete: "CASCADE",
     //   foreignKey: {
@@ -54,6 +54,6 @@ module.exports = (sequelize, Sequelize) => {
     //   },
     // });
     // User.belongsToMany(models.subjects, { through: "teacher_subjects", foreignKey: 'teacher_id' });
-  };
-  return userCourse;
+    };
+    return userCourse;
 };

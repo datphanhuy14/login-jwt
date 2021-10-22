@@ -4,39 +4,39 @@ import { basename as _basename, join } from 'path';
 const basename = _basename(__filename);
 import Sequelize, { DataTypes } from 'sequelize';
 const sequelize = new Sequelize(
-  database,
-  username,
-  password,
-  {
-    host: _host,
-    dialect: _dialect,
-    operatorsAliases: 0,
+    database,
+    username,
+    password,
+    {
+        host: _host,
+        dialect: _dialect,
+        operatorsAliases: 0,
 
-    pool: _pool,
-    logging: false,
-    raw: true,
-  },
+        pool: _pool,
+        logging: false,
+        raw: true,
+    },
 );
 
 const db = {};
 readdirSync(join(__dirname))
-  .filter((file) => {
-    return (
-      file.indexOf('.') !== 0 && file !== basename && file.slice(-3) === '.js'
-    );
-  })
-  .forEach((file) => {
-    const model = require(join(__dirname, file))(
-      sequelize,
-      DataTypes,
-    );
-    console.log(model.name);
-    db[model.name] = model;
-  });
+    .filter((file) => {
+        return (
+            file.indexOf('.') !== 0 && file !== basename && file.slice(-3) === '.js'
+        );
+    })
+    .forEach((file) => {
+        const model = require(join(__dirname, file))(
+            sequelize,
+            DataTypes,
+        );
+        console.log(model.name);
+        db[model.name] = model;
+    });
 Object.keys(db).forEach(function (modelName) {
-  if (db[modelName].associate) {
-    db[modelName].associate(db);
-  }
+    if (db[modelName].associate) {
+        db[modelName].associate(db);
+    }
 });
 
 db.Sequelize = Sequelize;

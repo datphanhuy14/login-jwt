@@ -6,247 +6,247 @@ import { stringify } from 'querystring';
 import { isEmpty, uniq, find } from 'lodash';
 
 class Helper {
-  constructor() { }
+    constructor() { }
 
-  formatOutputData( data, message, additionalProperties = {} ) {
-    const result = {};
+    formatOutputData( data, message, additionalProperties = {} ) {
+        const result = {};
 
-    result.data = typeof data === 'object' ? data : null;
+        result.data = typeof data === 'object' ? data : null;
 
-    result.message = message ? message : '{{common.success}}';
+        result.message = message ? message : '{{common.success}}';
 
-    Object.assign( result, additionalProperties );
+        Object.assign( result, additionalProperties );
 
-    return result;
-  }
-
-  async formatDataTracker( req, data, message ) {
-    const result = {};
-
-    result.data = typeof data === 'object' ? data : null;
-
-    if ( result.data ) {
-      const {rows, createdBy, updatedBy} = result.data;
-
-      let userIds = [];
-
-      if ( createdBy ) {
-        userIds.push( createdBy );
-      }
-
-      if ( updatedBy ) {
-        userIds.push( updatedBy );
-      }
-
-      if ( rows && !isEmpty( rows ) ) {
-        for ( const row of rows ) {
-          const {createdBy, updatedBy} = row;
-          userIds.push( createdBy );
-          userIds.push( updatedBy );
-
-          if ( row.lessons && !isEmpty( rows ) ) {
-            for ( const lesson of row.lessons ) {
-              const {createdBy, updatedBy} = lesson;
-              userIds.push( createdBy );
-              userIds.push( updatedBy );
-            }
-          }
-        }
-      }
-
-      userIds = uniq( userIds );
-
-      if ( !isEmpty( userIds ) ) {
-        const users = await req.app.service( {
-          service: 'users',
-          mod: 'users',
-          act: 'list',
-          options: {
-            where: {
-              id: userIds,
-            },
-          },
-        } );
-
-        if ( users && users.rows && !isEmpty( users.rows ) ) {
-          if ( rows && !isEmpty( rows ) ) {
-            for ( const row of rows ) {
-              row.createdBy = find( users.rows, {id: row.createdBy} );
-              row.updatedBy = find( users.rows, {id: row.updatedBy} );
-
-              if ( row.lessons ) {
-                for ( const lesson of row.lessons ) {
-                  lesson.createdBy = find( users.rows, {id: lesson.createdBy} );
-                  lesson.updatedBy = find( users.rows, {id: lesson.updatedBy} );
-                }
-              }
-
-              if ( row.trainingLessons ) {
-                for ( const trainingLesson of row.trainingLessons ) {
-                  trainingLesson.createdBy = find( users.rows, {id: trainingLesson.createdBy} );
-                  trainingLesson.updatedBy = find( users.rows, {id: trainingLesson.updatedBy} );
-                }
-              }
-            }
-          }
-
-          if ( createdBy ) {
-            result.data.createdBy = find( users.rows, {id: createdBy} );
-          }
-
-          if ( updatedBy ) {
-            result.data.updatedBy = find( users.rows, {id: updatedBy} );
-          }
-        }
-      }
+        return result;
     }
 
-    result.message = message ? message : '{{common.success}}';
+    async formatDataTracker( req, data, message ) {
+        const result = {};
 
-    return result;
-  }
+        result.data = typeof data === 'object' ? data : null;
 
-  displayErrorMessage( error ) {
-    const result = {
-      message: {},
-    };
+        if ( result.data ) {
+            const {rows, createdBy, updatedBy} = result.data;
 
-    try {
-      // === SQL string error ===
-      if ( typeof error == 'object' && !error.errors ) {
-        result.message = '{{common.somethingWentWrong}}';
+            let userIds = [];
 
-        if ( error.original && error.original.detail ) {
-          result.message = error.original.detail;
+            if ( createdBy ) {
+                userIds.push( createdBy );
+            }
+
+            if ( updatedBy ) {
+                userIds.push( updatedBy );
+            }
+
+            if ( rows && !isEmpty( rows ) ) {
+                for ( const row of rows ) {
+                    const {createdBy, updatedBy} = row;
+                    userIds.push( createdBy );
+                    userIds.push( updatedBy );
+
+                    if ( row.lessons && !isEmpty( rows ) ) {
+                        for ( const lesson of row.lessons ) {
+                            const {createdBy, updatedBy} = lesson;
+                            userIds.push( createdBy );
+                            userIds.push( updatedBy );
+                        }
+                    }
+                }
+            }
+
+            userIds = uniq( userIds );
+
+            if ( !isEmpty( userIds ) ) {
+                const users = await req.app.service( {
+                    service: 'users',
+                    mod: 'users',
+                    act: 'list',
+                    options: {
+                        where: {
+                            id: userIds,
+                        },
+                    },
+                } );
+
+                if ( users && users.rows && !isEmpty( users.rows ) ) {
+                    if ( rows && !isEmpty( rows ) ) {
+                        for ( const row of rows ) {
+                            row.createdBy = find( users.rows, {id: row.createdBy} );
+                            row.updatedBy = find( users.rows, {id: row.updatedBy} );
+
+                            if ( row.lessons ) {
+                                for ( const lesson of row.lessons ) {
+                                    lesson.createdBy = find( users.rows, {id: lesson.createdBy} );
+                                    lesson.updatedBy = find( users.rows, {id: lesson.updatedBy} );
+                                }
+                            }
+
+                            if ( row.trainingLessons ) {
+                                for ( const trainingLesson of row.trainingLessons ) {
+                                    trainingLesson.createdBy = find( users.rows, {id: trainingLesson.createdBy} );
+                                    trainingLesson.updatedBy = find( users.rows, {id: trainingLesson.updatedBy} );
+                                }
+                            }
+                        }
+                    }
+
+                    if ( createdBy ) {
+                        result.data.createdBy = find( users.rows, {id: createdBy} );
+                    }
+
+                    if ( updatedBy ) {
+                        result.data.updatedBy = find( users.rows, {id: updatedBy} );
+                    }
+                }
+            }
         }
-      }
 
-      // === validation error ===
-      if ( error && error.errors && Array.isArray( error.errors ) ) {
-        error.errors.forEach( ( error ) => {
-          if ( error.type === 'Validation error' || error.type === 'notNull Violation' ) {
-            if (
-              typeof result.message == 'string' ||
+        result.message = message ? message : '{{common.success}}';
+
+        return result;
+    }
+
+    displayErrorMessage( error ) {
+        const result = {
+            message: {},
+        };
+
+        try {
+            // === SQL string error ===
+            if ( typeof error == 'object' && !error.errors ) {
+                result.message = '{{common.somethingWentWrong}}';
+
+                if ( error.original && error.original.detail ) {
+                    result.message = error.original.detail;
+                }
+            }
+
+            // === validation error ===
+            if ( error && error.errors && Array.isArray( error.errors ) ) {
+                error.errors.forEach( ( error ) => {
+                    if ( error.type === 'Validation error' || error.type === 'notNull Violation' ) {
+                        if (
+                            typeof result.message == 'string' ||
                             ( typeof result.message == 'object' && !result.message.validation )
-            ) {
-              result.message = {
-                validation: true,
-              };
+                        ) {
+                            result.message = {
+                                validation: true,
+                            };
+                        }
+
+                        result.message[error.path] = error.message;
+                    } else {
+                        result.message = this.ucFirst( error.message );
+                    }
+                } );
             }
 
-            result.message[error.path] = error.message;
-          } else {
-            result.message = this.ucFirst( error.message );
-          }
-        } );
-      }
+            // === excetion ===
+            if ( typeof error == 'object' && error.message && !error.errors ) {
+                result.message = error.message;
+            }
 
-      // === excetion ===
-      if ( typeof error == 'object' && error.message && !error.errors ) {
-        result.message = error.message;
-      }
+            // === other ===
+            if (
+                !( ( typeof error == 'object' && !error.errors ) || ( error && error.errors && Array.isArray( error.errors ) ) )
+            ) {
+                result.message = this.ucFirst( error );
+            }
+        } catch ( exception ) {
+            result.message = '{{common.somethingWentWrong}}';
+        }
 
-      // === other ===
-      if (
-        !( ( typeof error == 'object' && !error.errors ) || ( error && error.errors && Array.isArray( error.errors ) ) )
-      ) {
-        result.message = this.ucFirst( error );
-      }
-    } catch ( exception ) {
-      result.message = '{{common.somethingWentWrong}}';
+        return result;
     }
 
-    return result;
-  }
-
-  /**
+    /**
      * Turn the string to camel case
      * @param str
      * @return {string}
      */
-  camelize( str ) {
-    return str.trim().replace( /[-_\s]+(.)?/g, ( match, c ) => c.toUpperCase() );
-  }
+    camelize( str ) {
+        return str.trim().replace( /[-_\s]+(.)?/g, ( match, c ) => c.toUpperCase() );
+    }
 
-  /**
+    /**
      * Uppercase first char
      * @param str
      * @return {string}
      */
-  ucFirst( str ) {
-    if ( str ) {
-      return str.charAt( 0 ).toUpperCase() + str.slice( 1 );
-    }
+    ucFirst( str ) {
+        if ( str ) {
+            return str.charAt( 0 ).toUpperCase() + str.slice( 1 );
+        }
 
-    return str;
-  }
-  /**
+        return str;
+    }
+    /**
      * Validate a json string
      * @param str
      * @return {boolean}
      */
-  isValidJson( str ) {
-    try {
-      JSON.parse( str );
-      return true;
-    } catch ( e ) {
-      return false;
+    isValidJson( str ) {
+        try {
+            JSON.parse( str );
+            return true;
+        } catch ( e ) {
+            return false;
+        }
     }
-  }
 
-  /**
+    /**
      * Curl
      * @param object settings
      * @return {object}
      */
-  curl( settings ) {
-    return new Promise( ( resolve, reject ) => {
-      const options = parse( `${settings.callUrl}` );
+    curl( settings ) {
+        return new Promise( ( resolve, reject ) => {
+            const options = parse( `${settings.callUrl}` );
 
-      options.method = settings.method ? settings.method : 'GET';
-      options.data = settings.data ? settings.data : {};
-      options.headers = {
-        'Content-type': 'application/x-www-form-urlencoded',
-      };
+            options.method = settings.method ? settings.method : 'GET';
+            options.data = settings.data ? settings.data : {};
+            options.headers = {
+                'Content-type': 'application/x-www-form-urlencoded',
+            };
 
-      if ( settings.token ) {
-        options.headers.Authorization = 'Bearer ' + settings.token;
-      }
+            if ( settings.token ) {
+                options.headers.Authorization = 'Bearer ' + settings.token;
+            }
 
-      const caller = options.protocol === 'https:' ? https : http;
-      const data = [];
-      const req = caller.request( options, ( res ) => {
-        res
-            .on( 'data', ( chunk ) => {
-              data.push( chunk );
-            } )
-            .on( 'end', () => {
-              try {
-                const stringData = Buffer.concat( data ).toString();
-                if ( res.statusCode === 404 ) {
-                  return reject( stringData );
-                }
+            const caller = options.protocol === 'https:' ? https : http;
+            const data = [];
+            const req = caller.request( options, ( res ) => {
+                res
+                    .on( 'data', ( chunk ) => {
+                        data.push( chunk );
+                    } )
+                    .on( 'end', () => {
+                        try {
+                            const stringData = Buffer.concat( data ).toString();
+                            if ( res.statusCode === 404 ) {
+                                return reject( stringData );
+                            }
 
-                const parsedData = JSON.parse( stringData );
-                if ( res.statusCode !== 200 ) {
-                  return reject( parsedData );
-                }
+                            const parsedData = JSON.parse( stringData );
+                            if ( res.statusCode !== 200 ) {
+                                return reject( parsedData );
+                            }
 
-                resolve( parsedData );
-              } catch ( e ) {
-                reject( e );
-              }
+                            resolve( parsedData );
+                        } catch ( e ) {
+                            reject( e );
+                        }
+                    } );
             } );
-      } );
 
-      req.on( 'error', ( e ) => {
-        reject( e );
-      } );
+            req.on( 'error', ( e ) => {
+                reject( e );
+            } );
 
-      req.write( stringify( options.data ) );
-      req.end();
-    } );
-  }
+            req.write( stringify( options.data ) );
+            req.end();
+        } );
+    }
 }
 
 export default new Helper();
