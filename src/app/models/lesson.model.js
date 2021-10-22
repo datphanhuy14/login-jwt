@@ -1,3 +1,4 @@
+import models from '../models/';
 module.exports = (sequelize, Sequelize) => {
     const Lesson = sequelize.define('lessons', {
         id: {
@@ -55,8 +56,19 @@ module.exports = (sequelize, Sequelize) => {
         tableName: 'lessons',
     },
     );
+    Lesson.addScope('associated', (partition) => {
+        {
+            return {
+                include: [
+                    {
+                        model: models.courses,
+                    }
+                ]
+            };
+        }
+    });
     Lesson.associate = (models) => {
-    // Lesson.hasMany(models.users);
+        Lesson.belongsTo(models.courses, { foreignKey: 'course_id' });
     };
     return Lesson;
 };

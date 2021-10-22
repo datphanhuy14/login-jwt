@@ -1,5 +1,6 @@
-const _ = require ( "lodash" );
-const Sequelize = require ( "sequelize" );
+const _ = require("lodash");
+const Sequelize = require("sequelize");
+import models from "../models";
 
 const specific = ["like", "notLike", "iLike", "notILike"];
 const operators = {
@@ -26,13 +27,15 @@ const operators = {
 };
 
 export class Query {
-    static init( req, res, next ) {
+    static init(req, res, next) {
         const { options } = req;
-        const paginate = Query.paginate( req );
-        const where = Query.where( req );
-        const order = Query.sort( req );
-
-        Object.assign( req, {
+        const paginate = Query.paginate(req);
+        const where = Query.where(req);
+        const order = Query.sort(req);
+        console.log('paginate', paginate);
+        console.log('where', where);
+        console.log('order', order);
+        Object.assign(req, {
             paginate,
             where,
             order,
@@ -42,90 +45,96 @@ export class Query {
                 {
                     where: Object.assign(
                         {},
-                        _.get( options, "where" ) || {},
-                        _.get( where, "where" )
+                        _.get(options, "where") || {},
+                        _.get(where, "where")
                     )
                 },
                 order
+                // {
+                //     include : [
+                //         models.courses
+                //     ]
+                // }
             )
-        } );
+        });
 
         next();
     }
 
-    static where( req ) {
+    static where(req) {
         let { filter } = req.query;
         const where = {};
 
-        if ( Query.isJson( filter ) ) {
-            filter = JSON.parse( filter );
-            if ( Array.isArray( filter ) && !_.isEmpty( filter ) ) {
-                filter.forEach( ( field ) => {
+        if (Query.isJson(filter)) {
+            filter = JSON.parse(filter);
+            if (Array.isArray(filter) && !_.isEmpty(filter)) {
+                filter.forEach((field) => {
                     const { operator, property } = field;
                     let { value } = field;
 
-                    if ( property && operator && operators[operator] ) {
-                        if ( specific.indexOf( operator ) >= 0 ) {
+                    if (property && operator && operators[operator]) {
+                        if (specific.indexOf(operator) >= 0) {
                             value = `%${value}%`;
                         }
 
-                        Object.assign( where, {
+                        Object.assign(where, {
                             [property]: {
                                 [operators[operator]]: value
                             }
-                        } );
+                        });
                     }
-                } );
+                });
             }
         }
 
         return { where };
     }
 
-    static sort( req ) {
+    static sort(req) {
         let { sort } = req.query;
         const order = [];
 
-        if ( !Query.isJson( sort ) ) {
+        if (!Query.isJson(sort)) {
             return order;
         }
 
-        sort = JSON.parse( sort );
+        sort = JSON.parse(sort);
 
-        if ( Array.isArray( sort ) && !_.isEmpty( sort ) ) {
-            sort.forEach( ( field ) => {
-                order.push( [field.property, field.direction] );
-            } );
+        if (Array.isArray(sort) && !_.isEmpty(sort)) {
+            sort.forEach((field) => {
+                order.push([field.property, field.direction]);
+            });
         }
+        
 
         return {
             order
         };
     }
 
-    static paginate( req ) {
+    static paginate(req) {
         const { limit = 10, start = 0 } = req.query;
         const paginate = {};
 
-        if ( limit ) {
+        if (limit) {
             paginate.limit = limit;
-            if ( limit > 10 ) {
+            if (limit > 10) {
                 paginate.limit = 10;
             }
         }
 
-        if ( start ) {
+        if (start) {
             paginate.offset = start;
         }
 
         return paginate;
     }
 
-    static isJson( str ) {
+    static isJson(str) {
         try {
-            JSON.parse( str );
+            JSON.parse(str);
             return true;
-        } catch ( e ) {
+        } catch (e) {
             return false;
         }
     }

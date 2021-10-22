@@ -100,6 +100,12 @@ module.exports = (sequelize, Sequelize) => {
                 field: 'course_id',
             },
         });
+        Course.hasMany(models.questions, {
+            onDelete: 'CASCADE',
+            foreignKey: {
+                field: 'course_id',
+            },
+        });
         Course.hasMany(models.userCourses, {
             onDelete: 'CASCADE',
             foreignKey: {
