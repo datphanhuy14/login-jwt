@@ -1,7 +1,6 @@
-import { userEntity as selfEntity } from '../../entities/';
+import { userEntity as selfEntity } from '../../entities';
 import { Router } from 'express';
 import passport from "passport";
-import { auth } from "../../controllers";
 import { isAdmin, isAuth } from '../../middlewares';
 import { jwtHelper, helper } from "../../helpers";
 
@@ -15,7 +14,9 @@ class Controller {
             .get(this.list)
             .post(isAdmin, this.create);
         router
-            .post("/login", auth.login);
+            .post("/login", this.login);
+        router
+            .post("/refres-token", this.refreshToken);
         router
             .route('/:id(\\d+)/')
             .get(this.read)
@@ -64,6 +65,40 @@ class Controller {
 
         return router;
     }
+
+    async login(req, res) {
+        try {
+            selfEntity
+                .login(req.body)
+                .then(async (datas) => {
+                    res.status(200).json(
+                        helper.formatOutputData(datas, '{{common.success}}'),
+                    );
+                })
+                .catch((report) => {
+                    res.status(400).json(report);
+                });
+        } catch (error) {
+            res.status(500).json(helper.displayErrorMessage(error));
+        }
+    }
+    async refreshToken(req, res) {
+        try {
+            selfEntity
+                .refreshToken(req.body)
+                .then(async (datas) => {
+                    res.status(200).json(
+                        helper.formatOutputData(datas, '{{common.success}}'),
+                    );
+                })
+                .catch((report) => {
+                    res.status(400).json(report);
+                });
+        } catch (error) {
+            res.status(500).json(helper.displayErrorMessage(error));
+        }
+    }
+
 
     async list(req, res) {
         try {
@@ -163,5 +198,4 @@ class Controller {
     }
 }
 
-// const routes = restRoutes(level);
 export default new Controller;

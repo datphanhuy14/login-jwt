@@ -9,10 +9,6 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.STRING,
       field: 'name',
     },
-    description: {
-      type: Sequelize.STRING,
-      field: 'description',
-    },
     createdAt: {
       type: Sequelize.DATE,
       allowNull: true,
@@ -31,7 +27,7 @@ module.exports = (sequelize, Sequelize) => {
     },
   );
   Role.associate = (models) => {
-    Role.hasOne(models.users);
+    Role.hasMany(models.users);
   };
   return Role;
 };

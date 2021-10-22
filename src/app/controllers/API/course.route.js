@@ -1,8 +1,9 @@
 // const {restRoutes} = require('../../helpers');
 // const {level} = require('../../controllers');
-import { courseEntity as selfEntity } from '../../entities/';
+import { courseEntity as selfEntity } from '../../entities';
 import { Router } from 'express';
 import { helper } from '../../helpers';
+import {Query} from '../../middlewares';
 
 class Controller {
   // === init router ===
@@ -11,7 +12,7 @@ class Controller {
 
     router
         .route( '/' )
-        .get( this.list )
+        .get(Query.init, this.list )
         .post( this.create );
 
     router

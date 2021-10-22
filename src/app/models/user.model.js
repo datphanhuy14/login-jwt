@@ -19,14 +19,41 @@ module.exports = (sequelize, Sequelize) => {
       fullname: {
         type: Sequelize.STRING,
         allowNull: false,
+        field: 'fullname'
       },
       email: {
         type: Sequelize.STRING,
         unique: true,
+        validate: {
+          isEmail: {
+            args: true,
+            msg: "user.validate.invalidEmail"
+          }
+        }
       },
       password: {
         type: Sequelize.STRING,
         allowNull: true,
+      },
+      tel: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        field: 'tel'
+      },
+      avatar: {
+        type: Sequelize.STRING,
+        allowNull: true,
+        field: 'avatar'
+      },
+      dateOfBirth: {
+        type: Sequelize.DATE,
+        allowNull: true,
+        field: 'date_of_birth'
+      },
+      displayName: {
+        type: Sequelize.STRING,
+        allowNull: true,
+        field: 'display_name'
       },
       active: {
         type: Sequelize.BOOLEAN,
@@ -61,6 +88,9 @@ module.exports = (sequelize, Sequelize) => {
         include: [
           {
             model: models.roles,
+          },
+          {
+            model: models.rates
           }
         ]
       };
@@ -70,10 +100,10 @@ module.exports = (sequelize, Sequelize) => {
     User.belongsTo(models.roles, {
       onDelete: "CASCADE",
       foreignKey: {
-        allowNull: true,
+        filed: 'role_id',
       },
     });
-    User.belongsToMany(models.subjects, { through: "teacher_subjects", foreignKey: 'teacher_id' });
+    User.hasMany(models.rates, { foreignKey: 'user_id' });
   };
   return User;
 };

@@ -1,23 +1,27 @@
-// const {restRoutes} = require('../../helpers');
-// const {level} = require('../../controllers');
-import { subjectEntity as selfEntity } from "../../entities/";
-import { Router } from "express";
-import { helper } from "../../helpers";
+import { rateEntity as selfEntity } from '../../entities';
+import { Router } from 'express';
+import { helper } from '../../helpers';
+import { Query } from '../../middlewares';
+
+
 
 class Controller {
   // === init router ===
   constructor() {
     const router = Router();
 
-    router.route("/").get(this.list).post(this.create);
+    router
+      .route('/')
+      .get(Query.init, this.list)
+      .post(this.create);
 
     router
-      .route("/:id(\\d+)/")
+      .route('/:id(\\d+)/')
       .get(this.read)
       .put(this.update)
       .delete(this.remove);
 
-    router.param("id", this.getById);
+    router.param('id', this.getById);
 
     return router;
   }
@@ -28,9 +32,9 @@ class Controller {
       selfEntity
         .list(options)
         .then(async (datas) => {
-          res
-            .status(200)
-            .json(helper.formatOutputData(datas, "{{common.success}}"));
+          res.status(200).json(
+            helper.formatOutputData(datas, '{{common.success}}'),
+          );
         })
         .catch((report) => {
           res.status(400).json(report);
@@ -42,9 +46,9 @@ class Controller {
 
   async read(req, res) {
     try {
-      res
-        .status(200)
-        .json(helper.formatOutputData(req.detail, "{{success.common}}"));
+      res.status(200).json(
+        helper.formatOutputData(req.detail, '{{success.common}}'),
+      );
     } catch (error) {
       res.status(500).json(helper.displayErrorMessage(error));
     }
@@ -55,9 +59,9 @@ class Controller {
       selfEntity
         .create(req.body)
         .then((report) => {
-          res
-            .status(200)
-            .json(helper.formatOutputData(report, "{{success.common}}"));
+          res.status(200).json(
+            helper.formatOutputData(report, '{{success.common}}'),
+          );
         })
         .catch((report) => {
           res.status(400).json(report);
@@ -72,9 +76,9 @@ class Controller {
       selfEntity
         .update(req.detail.id, req.body)
         .then((report) => {
-          res
-            .status(200)
-            .json(helper.formatOutputData(report, "{{success.common}}"));
+          res.status(200).json(
+            helper.formatOutputData(report, '{{success.common}}'),
+          );
         })
         .catch((report) => {
           res.status(400).json(report);
@@ -91,7 +95,9 @@ class Controller {
         .then((report) => {
           const { data, message } = report;
 
-          res.status(200).json(helper.formatOutputData(data, message));
+          res.status(200).json(
+            helper.formatOutputData(data, message),
+          );
         })
         .catch((report) => {
           res.status(400).json(report);
@@ -119,4 +125,4 @@ class Controller {
 }
 
 // const routes = restRoutes(level);
-export default new Controller();
+export default new Controller;

@@ -1,8 +1,12 @@
-const auth = require('./auth.controller').default;
-const test = require( './test.controller' );
-const user = require( './user.controller' );
-const passport = require( './passport.controller' );
+import { Router } from 'express';
+const router = Router();
+import user2 from './user/user2';
+import API from './rediriectAPI';
+import { isAuth } from '../middlewares';
 
-module.exports = {
-  auth, test, user, passport,
-};
+/* GET home page. */
+// router.use('/dev', devApi);
+router.use('/auth', user2);
+router.use('/api', isAuth, API);
+
+export default router;

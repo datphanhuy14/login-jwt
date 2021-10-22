@@ -1,9 +1,11 @@
 /* eslint-disable no-unused-vars */
-import models from '../models';
-// const db = require("../models");
+
+// const models = require("../models");
+import models from ".";
+
 module.exports = (sequelize, Sequelize) => {
   const Subject = sequelize.define(
-    "subjects",
+    'subjects',
     {
       id: {
         type: Sequelize.INTEGER,
@@ -11,71 +13,70 @@ module.exports = (sequelize, Sequelize) => {
         unique: true,
         autoIncrement: true,
       },
-      content1: {
+      title: {
         type: Sequelize.STRING,
-        field: "content_1",
-      },
-      content2: {
-        type: Sequelize.STRING,
-        field: "content_2",
-      },
-      content3: {
-        type: Sequelize.STRING,
-        field: "content_3",
+        allowNull: false,
+        field: 'title',
       },
       code: {
         type: Sequelize.STRING,
-        field: "code",
+        field: 'code',
       },
-      credits: {
-        type: Sequelize.INTEGER,
-        field: "credits",
-      },
-      title: {
+      content1: {
         type: Sequelize.STRING,
-        field: "title",
+        allowNull: true,
+        field: 'content_1',
       },
-      teachers: {
-        type: Sequelize.ARRAY(Sequelize.UUID),
-        field: "teachers",
-        defaultValue: []
+      content2: {
+        type: Sequelize.STRING,
+        allowNull: true,
+        field: 'content_2',
+      },
+      content3: {
+        type: Sequelize.STRING,
+        allowNull: true,
+        field: 'content_3',
       },
       active: {
         type: Sequelize.BOOLEAN,
-        field: "status",
+        field: 'active',
         defaultValue: true,
+      },
+      image: {
+        type: Sequelize.STRING,
+        field: 'image',
       },
       createdAt: {
         type: Sequelize.DATE,
         allowNull: true,
-        field: "created_at",
+        field: 'created_at',
       },
-
       updatedAt: {
         type: Sequelize.DATE,
         allowNull: true,
-        field: "updated_at",
+        field: 'updated_at',
       },
     },
     {
       timestamps: true,
       underscored: true,
-      tableName: "subjects",
-    }
+      tableName: 'subjects',
+    },
   );
-  Subject.addScope('associated', (partition) => {
-    {
-      return {
-        include: [
-          {
-            model: models.users,
-          }
-        ]
-      };
-    }
-  });
-  // Subject.associate = (models) => {
-  //   Subject.belongsToMany(models.users, { through: "teacher_subjects", foreignKey: 'subject_id' });
-  // };
+  // Subject.addScope('associated', (partition) => {
+  //   {
+  //     return {
+  //       include: [
+  //         {
+  //           model: models.users,
+  //         }
+  //       ]
+  //     };
+  //   }
+  // });
+  Subject.associate = (models) => {
+    Subject.hasMany(models.courses);
+  };
   return Subject;
+
 };
