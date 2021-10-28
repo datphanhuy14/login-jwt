@@ -35,6 +35,16 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.STRING,
             field: 'media'
         },
+        createdBy: {
+            type: Sequelize.UUID,
+            allowNull: true,
+            field: "created_by",
+        },
+        updatedBy: {
+            type: Sequelize.UUID,
+            allowNull: true,
+            field: "updated_by",
+        },
         createdAt: {
             type: Sequelize.DATE,
             allowNull: true,

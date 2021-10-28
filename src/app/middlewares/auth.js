@@ -13,6 +13,22 @@ const isAuth = async (req, res, next) => {
                 accessTokenSecret
             );
             req.jwtDecoded = decoded;
+            console.log(req.jwtDecoded);
+            if (req.jwtDecoded.data) {
+                switch (req.method) {
+                    case 'POST':
+                        Object.assign(req.body, {
+                            createdBy: req.jwtDecoded.data.id,
+                            updatedBy: req.jwtDecoded.data.id
+                        });
+                        break;
+                    case 'PUT':
+                        Object.assign(req.body, {
+                            updatedBy: req.jwtDecoded.data.id
+                        });
+                        break;
+                }
+            }
             next();
         } catch (error) {
             debug("Error while verify token:", error);

@@ -63,17 +63,6 @@ module.exports = (sequelize, Sequelize) => {
             tableName: 'subjects',
         },
     );
-    // Subject.addScope('associated', (partition) => {
-    //   {
-    //     return {
-    //       include: [
-    //         {
-    //           model: models.users,
-    //         }
-    //       ]
-    //     };
-    //   }
-    // });
     Subject.associate = (models) => {
         Subject.hasMany(models.courses);
     };

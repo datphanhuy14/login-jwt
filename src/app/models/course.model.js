@@ -40,6 +40,16 @@ module.exports = (sequelize, Sequelize) => {
                 field: "active",
                 defaultValue: true,
             },
+            createdBy: {
+                type: Sequelize.UUID,
+                allowNull: true,
+                field: "created_by",
+            },
+            updatedBy: {
+                type: Sequelize.UUID,
+                allowNull: true,
+                field: "updated_by",
+            },
             createdAt: {
                 type: Sequelize.DATE,
                 allowNull: true,
