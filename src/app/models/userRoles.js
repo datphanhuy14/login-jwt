@@ -1,19 +1,25 @@
 module.exports = (sequelize, Sequelize) => {
-    const Role = sequelize.define('roles', {
+    const UserRole = sequelize.define('userRoles', {
         id: {
             type: Sequelize.INTEGER,
-            autoIncrement: true,
             primaryKey: true,
+            unique: true,
+            autoIncrement: true,
         },
-        permission: {
-            type: Sequelize.STRING,
-            field: 'permission',
+        userId: {
+            type: Sequelize.UUID,
+            field: 'user_id'
+        },
+        roleId: {
+            type: Sequelize.INTEGER,
+            field: 'role_id'
         },
         createdAt: {
             type: Sequelize.DATE,
             allowNull: true,
             field: 'created_at',
         },
+
         updatedAt: {
             type: Sequelize.DATE,
             allowNull: true,
@@ -23,16 +29,14 @@ module.exports = (sequelize, Sequelize) => {
     {
         timestamps: true,
         underscored: true,
-        tableName: 'roles',
+        tableName: 'user_roles',
     },
     );
-    Role.associate = (models) => {
-        Role.hasMany(models.userRoles, {
-            onDelete: 'CASCADE',
-            foreignKey: {
-                field: 'role_id',
-            },
-        });
+    UserRole.associate = (models) => {
+        UserRole.belongsTo(models.roles);
+        UserRole.belongsTo(models.users);
     };
-    return Role;
+
+    return UserRole;
 };
+

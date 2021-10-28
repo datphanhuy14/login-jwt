@@ -36,12 +36,6 @@ module.exports = {
                 field: 'active',
                 defaultValue: true,
             },
-            roleId: {
-                type: DataTypes.INTEGER,
-                allowNull: true,
-                field: 'role_id',
-                defaultValue: 0,
-            },
             createdAt: {
                 type: DataTypes.DATE,
                 allowNull: true,

@@ -59,12 +59,6 @@ module.exports = (sequelize, Sequelize) => {
                 type: Sequelize.BOOLEAN,
                 defaultValue: true,
             },
-            roleId: {
-                type: Sequelize.INTEGER,
-                allowNull: true,
-                field: "role_id",
-                defaultValue: 0,
-            },
             createdAt: {
                 type: Sequelize.DATE,
                 allowNull: true,
@@ -87,7 +81,7 @@ module.exports = (sequelize, Sequelize) => {
             return {
                 include: [
                     {
-                        model: models.roles,
+                        model: models.userRoles,
                     },
                     {
                         model: models.rates
@@ -97,13 +91,8 @@ module.exports = (sequelize, Sequelize) => {
         }
     });
     User.associate = (models) => {
-        User.belongsTo(models.roles, {
-            onDelete: "CASCADE",
-            foreignKey: {
-                filed: 'role_id',
-            },
-        });
         User.hasMany(models.rates, { foreignKey: 'user_id' });
+        User.hasMany(models.userRoles, { foreignKey: 'user_id'},);
     };
     return User;
 };

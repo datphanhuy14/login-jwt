@@ -1,33 +1,37 @@
 /* eslint-disable no-unused-vars */
-'use strict';
+"use strict";
 
 module.exports = {
-    up: ( migration, DataTypes ) => {
-        return migration.createTable( 'roles', {
+    up: (migration, DataTypes) => {
+        return migration.createTable("user_roles", {
             id: {
                 type: DataTypes.INTEGER,
                 primaryKey: true,
                 unique: true,
                 autoIncrement: true,
             },
-            permission: {
-                type: DataTypes.STRING,
-                field: 'permission',
+            userId: {
+                type: DataTypes.UUID,
+                field: "user_id",
+            },
+            roleId: {
+                type: DataTypes.INTEGER,
+                field: "role_id",
             },
             createdAt: {
                 type: DataTypes.DATE,
                 allowNull: true,
-                field: 'created_at',
+                field: "created_at",
             },
 
             updatedAt: {
                 type: DataTypes.DATE,
                 allowNull: true,
-                field: 'updated_at',
+                field: "updated_at",
             },
-        } );
+        });
     },
-    down: ( migration, DataTypes ) => {
-        return migration.dropTable( 'roles' );
+    down: (migration, DataTypes) => {
+        return migration.dropTable("user_roles");
     },
 };
