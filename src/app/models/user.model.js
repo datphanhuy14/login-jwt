@@ -92,7 +92,7 @@ module.exports = (sequelize, Sequelize) => {
     });
     User.associate = (models) => {
         User.hasMany(models.rates, { foreignKey: 'user_id' });
-        User.hasMany(models.userRoles, { foreignKey: 'user_id'},);
+        User.hasMany(models.userRoles, { foreignKey: 'user_id'});
     };
     return User;
 };

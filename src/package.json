@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node --exec babel-node ./bin/www",
-    "dev": "nodemon --exec babel-node  ./bin/www"
+    "start": "node --exec babel-node ./server.js",
+    "dev": "nodemon --exec babel-node  ./server.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

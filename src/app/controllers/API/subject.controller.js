@@ -50,7 +50,6 @@ class Controller {
     }
 
     async create(req, res) {
-        console.log(req.body);
         try {
             selfEntity
                 .create(req.body)

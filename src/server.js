@@ -1,32 +1,60 @@
-import express from "express";
-import cookieParser from "cookie-parser";
-import logger from "morgan";
-require("dotenv").config();
-import { Router, Models as db } from "./app/";
-const app = express();
-import session from "express-session";
-import passport from "passport";
-
-app.use(
-    session({ secret: "zesvn88aaa", saveUninitialized: false, resave: true })
-);
-app.use(passport.initialize());
-app.use(passport.session());
-
-// require("./app/middlewares/passport");
-import("./app/middlewares/passport");
-app.use(logger("dev"));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-
-// force: true will drop the table if it already exists
-db.sequelize.sync({ force: false }).then(() => {
-    console.info(
-        `Connection has been established successfully ${process.env.DB_PORT}`
-    );
-});
-
-app.use("/", Router);
-
-module.exports = app;
+const app = require( './app' ); 
+const debug = console.log.bind( console );
+const http = require( 'http' );
+const port = normalizePort( process.env.PORT || '3000' );
+app.set( 'port', port );
+  
+const server = http.createServer( app );
+ 
+server.listen( port );
+server.on( 'error', onError );
+server.on( 'listening', onListening );
+ 
+function normalizePort( val ) {
+    const port = parseInt( val, 10 );
+ 
+    if ( isNaN( port ) ) {
+        // named pipe
+        return val;
+    }
+ 
+    if ( port >= 0 ) {
+        // port number
+        return port;
+    }
+ 
+    return false;
+}
+ 
+function onError( error ) {
+    if ( error.syscall !== 'listen' ) {
+        throw error;
+    }
+ 
+    const bind = typeof port === 'string'
+        ? 'Pipe ' + port
+        : 'Port ' + port;
+ 
+    // handle specific listen errors with friendly messages
+    switch ( error.code ) {
+        case 'EACCES':
+            console.error( bind + ' requires elevated privileges' );
+            process.exit( 1 );
+            break;
+        case 'EADDRINUSE':
+            console.error( bind + ' is already in use' );
+            process.exit( 1 );
+            break;
+        default:
+            throw error;
+    }
+}
+ 
+function onListening() {
+    const addr = server.address();
+    const bind = typeof addr === 'string'
+        ? 'pipe ' + addr
+        : 'port ' + addr.port;
+    debug( 'Listening on ' + bind );
+}
+ 
