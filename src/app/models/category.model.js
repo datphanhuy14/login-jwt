@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-    const Category = sequelize.define('categories', {
+    const model = sequelize.define('categories', {
         id: {
             type: Sequelize.INTEGER,
             autoIncrement: true,
@@ -7,7 +7,13 @@ module.exports = (sequelize, Sequelize) => {
         },
         name: {
             type: Sequelize.STRING,
+            allowNull: false,
             field: 'name',
+        },
+        type : {
+            type: Sequelize.STRING,
+            allowNull: true,
+            field: 'type'
         },
         createdAt: {
             type: Sequelize.DATE,
@@ -26,7 +32,7 @@ module.exports = (sequelize, Sequelize) => {
         tableName: 'categories',
     },
     );
-    Category.associate = (models) => {
+    model.associate = (models) => {
         // Category.hasMany(models.lessonsCategories, {
         //     onDelete: 'CASCADE',
         //     through : 'lessons_categories',
@@ -34,8 +40,8 @@ module.exports = (sequelize, Sequelize) => {
         //         field: 'category_id',
         //     },
         // });
-        Category.hasMany(models.lessonsCategories,{foreignKey: 'category_id'});
+        model.hasMany(models.lessonsCategories,{foreignKey: 'category_id'});
 
     };
-    return Category;
+    return model;
 };

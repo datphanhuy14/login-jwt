@@ -4,7 +4,7 @@
 import models from ".";
 
 module.exports = (sequelize, Sequelize) => {
-    const Subject = sequelize.define(
+    const model = sequelize.define(
         'subjects',
         {
             id: {
@@ -73,9 +73,9 @@ module.exports = (sequelize, Sequelize) => {
             tableName: 'subjects',
         },
     );
-    Subject.associate = (models) => {
-        Subject.hasMany(models.courses);
+    model.associate = (models) => {
+        model.hasMany(models.courses);
     };
-    return Subject;
+    return model;
 
 };

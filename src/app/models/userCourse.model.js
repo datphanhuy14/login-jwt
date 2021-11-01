@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-    const userCourse = sequelize.define('userCourses', {
+    const model = sequelize.define('userCourses', {
         id: {
             type: Sequelize.INTEGER,
             primaryKey: true,
@@ -39,8 +39,8 @@ module.exports = (sequelize, Sequelize) => {
         tableName: 'user_courses',
     },
     );
-    userCourse.associate = (models) => {
-        userCourse.belongsTo(models.courses, {
+    model.associate = (models) => {
+        model.belongsTo(models.courses, {
             onDelete: "CASCADE",
             foreignKey: {
                 allowNull: true,
@@ -55,5 +55,5 @@ module.exports = (sequelize, Sequelize) => {
     // });
     // User.belongsToMany(models.subjects, { through: "teacher_subjects", foreignKey: 'teacher_id' });
     };
-    return userCourse;
+    return model;
 };

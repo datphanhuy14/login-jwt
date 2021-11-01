@@ -5,15 +5,17 @@ import userEntity from './user.entity';
 import userCourseEntity from './userCourse.entity';
 import lessonEntity from './lesson.entity';
 import questionEntity from './question.entity';
-import questionLogEntity from './questionLog.entity';
+import answerLogEntity from './answerLog.entity';
+import categoryEntity from './category.entity';
 
 export {
-    questionLogEntity,
+    answerLogEntity,
     questionEntity,
     lessonEntity,
     userCourseEntity,
     subjectEntity,
     rateEntity,
     courseEntity,
-    userEntity
+    userEntity,
+    categoryEntity
 };

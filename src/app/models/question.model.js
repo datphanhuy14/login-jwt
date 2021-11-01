@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-    const Question = sequelize.define('questions', {
+    const model = sequelize.define('questions', {
         id: {
             type: Sequelize.INTEGER,
             primaryKey: true,
@@ -63,8 +63,8 @@ module.exports = (sequelize, Sequelize) => {
         tableName: 'questions',
     },
     );
-    Question.associate = (models) => {
+    model.associate = (models) => {
         // Question.hasMany(models.users);
     };
-    return Question;
+    return model;
 };

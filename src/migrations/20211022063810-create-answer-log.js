@@ -3,7 +3,7 @@
 
 module.exports = {
     up: (migration, DataTypes) => {
-        return migration.createTable('question_logs', {
+        return migration.createTable('answer_logs', {
             id: {
                 type: DataTypes.INTEGER,
                 primaryKey: true,
@@ -60,6 +60,6 @@ module.exports = {
         });
     },
     down: (migration, DataTypes) => {
-        return migration.dropTable('question_logs');
+        return migration.dropTable('answer_logs');
     },
 };

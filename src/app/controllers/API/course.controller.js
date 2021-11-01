@@ -125,4 +125,4 @@ class Controller {
 }
 
 // const routes = restRoutes(level);
-export default new Controller;
+export default new Controller();

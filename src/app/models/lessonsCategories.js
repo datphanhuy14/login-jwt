@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-    const LessonCategory = sequelize.define('lessonsCategories', {
+    const model = sequelize.define('lessonsCategories', {
         id: {
             type: Sequelize.INTEGER,
             primaryKey: true,
@@ -32,11 +32,11 @@ module.exports = (sequelize, Sequelize) => {
         tableName: 'lessons_categories',
     },
     );
-    LessonCategory.associate = (models) => {
-        LessonCategory.belongsTo(models.lessons);
-        LessonCategory.belongsTo(models.categories);
+    model.associate = (models) => {
+        model.belongsTo(models.lessons);
+        model.belongsTo(models.categories);
     };
 
-    return LessonCategory;
+    return model;
 };
 

@@ -1,6 +1,6 @@
 // const {restRoutes} = require('../../helpers');
 // const {level} = require('../../controllers');
-import { questionLogEntity as selfEntity } from '../../entities';
+import { answerEntity as selfEntity } from '../../entities';
 import { Router } from 'express';
 import { helper } from '../../helpers';
 import { Query } from '../../middlewares';
@@ -125,4 +125,4 @@ class Controller {
 }
 
 // const routes = restRoutes(level);
-export default new Controller;
+export default new Controller();

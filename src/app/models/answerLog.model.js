@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-    const QuestionLogs = sequelize.define('questionLogs', {
+    const model = sequelize.define('answerLogs', {
         id: {
             type: Sequelize.INTEGER,
             primaryKey: true,
@@ -57,11 +57,11 @@ module.exports = (sequelize, Sequelize) => {
         {
             timestamps: true,
             underscored: true,
-            tableName: 'question_logs',
+            tableName: 'answer_logs',
         },
     );
-    QuestionLogs.associate = (models) => {
-        //   QuestionLogs.hasMany(models.users);
+    model.associate = (models) => {
+        //   AnswerLogs.hasMany(models.users);
     };
-    return QuestionLogs;
+    return model;
 };

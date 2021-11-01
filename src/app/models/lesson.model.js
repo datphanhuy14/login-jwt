@@ -1,6 +1,6 @@
 import models from "../models/";
 module.exports = (sequelize, Sequelize) => {
-    const Lesson = sequelize.define(
+    const model = sequelize.define(
         "lessons",
         {
             id: {
@@ -68,7 +68,7 @@ module.exports = (sequelize, Sequelize) => {
             tableName: "lessons",
         },
     );
-    Lesson.addScope("associated", (partition) => {
+    model.addScope("associated", (partition) => {
         {
             return {
                 include: [
@@ -79,9 +79,9 @@ module.exports = (sequelize, Sequelize) => {
             };
         }
     });
-    Lesson.associate = (models) => {
-        Lesson.belongsTo(models.courses, {foreignKey: "course_id"});
-        Lesson.hasMany(models.lessonsCategories, {foreignKey: "lesson_id"});
+    model.associate = (models) => {
+        model.belongsTo(models.courses, {foreignKey: "course_id"});
+        model.hasMany(models.lessonsCategories, {foreignKey: "lesson_id"});
     };
-    return Lesson;
+    return model;
 };

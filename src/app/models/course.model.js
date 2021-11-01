@@ -2,7 +2,7 @@
 import models from '.';
 // const db = require("../models");
 module.exports = (sequelize, Sequelize) => {
-    const Course = sequelize.define(
+    const model = sequelize.define(
         "courses",
         {
             id: {
@@ -67,7 +67,7 @@ module.exports = (sequelize, Sequelize) => {
             tableName: "courses",
         }
     );
-    Course.addScope('associated', (partition) => {
+    model.addScope('associated', (partition) => {
         {
             return {
                 include: [
@@ -103,26 +103,26 @@ module.exports = (sequelize, Sequelize) => {
         }
     });
 
-    Course.associate = (models) => {
-        Course.hasMany(models.rates, {
+    model.associate = (models) => {
+        model.hasMany(models.rates, {
             onDelete: 'CASCADE',
             foreignKey: {
                 field: 'course_id',
             },
         });
-        Course.hasMany(models.questions, {
+        model.hasMany(models.questions, {
             onDelete: 'CASCADE',
             foreignKey: {
                 field: 'course_id',
             },
         });
-        Course.hasMany(models.userCourses, {
+        model.hasMany(models.userCourses, {
             onDelete: 'CASCADE',
             foreignKey: {
                 field: 'course_id',
             },
         });
-        Course.belongsTo(models.subjects, {
+        model.belongsTo(models.subjects, {
             onDelete: 'CASCADE',
             foreignKey: {
                 field: 'subject_id',
@@ -130,5 +130,5 @@ module.exports = (sequelize, Sequelize) => {
         });
     };
 
-    return Course;
+    return model;
 };

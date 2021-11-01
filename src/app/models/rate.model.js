@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-    const Rate = sequelize.define('rates', {
+    const model = sequelize.define('rates', {
         id: {
             type: Sequelize.INTEGER,
             primaryKey: true,
@@ -47,11 +47,11 @@ module.exports = (sequelize, Sequelize) => {
         tableName: 'rates',
     },
     );
-    Rate.associate = (models) => {
-        Rate.belongsTo(models.courses);
-        Rate.belongsTo(models.users);
+    model.associate = (models) => {
+        model.belongsTo(models.courses);
+        model.belongsTo(models.users);
     };
 
-    return Rate;
+    return model;
 };
 

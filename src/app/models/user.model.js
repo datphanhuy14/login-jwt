@@ -2,7 +2,7 @@ const { uuidPrimaryKey } = require("../helpers");
 import models from '../models';
 // const db = require("../models");
 module.exports = (sequelize, Sequelize) => {
-    const User = sequelize.define(
+    const model = sequelize.define(
         "users",
         {
             id: uuidPrimaryKey(),
@@ -76,7 +76,7 @@ module.exports = (sequelize, Sequelize) => {
             tableName: "users",
         }
     );
-    User.addScope('associated', (partition) => {
+    model.addScope('associated', (partition) => {
         {
             return {
                 include: [
@@ -90,9 +90,9 @@ module.exports = (sequelize, Sequelize) => {
             };
         }
     });
-    User.associate = (models) => {
-        User.hasMany(models.rates, { foreignKey: 'user_id' });
-        User.hasMany(models.userRoles, { foreignKey: 'user_id'});
+    model.associate = (models) => {
+        model.hasMany(models.rates, { foreignKey: 'user_id' });
+        model.hasMany(models.userRoles, { foreignKey: 'user_id'});
     };
-    return User;
+    return model;
 };

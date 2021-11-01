@@ -4,8 +4,10 @@ import logger from "morgan";
 require("dotenv").config();
 import { Router, Models as db } from "./app/";
 const app = express();
+const ExpressRouter = express.Router();
 import session from "express-session";
 import passport from "passport";
+import {controllers, authController} from "./app/";
 
 app.use(
     session({ secret: "zesvn88aaa", saveUninitialized: false, resave: true })
@@ -27,6 +29,14 @@ db.sequelize.sync({ force: false }).then(() => {
     );
 });
 
-app.use("/", Router);
+// const { controllers } = App;
+if (controllers) {
+    for (const controllerName in controllers) {
+        if (controllers[controllerName]) {
+            app.use('/api/v1', ExpressRouter.use(`/${controllerName}`, controllers[controllerName]));
+        }
+    }
+}
+app.use('/api/auth', authController);
 
 module.exports = app;

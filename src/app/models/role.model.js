@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-    const Role = sequelize.define('roles', {
+    const model = sequelize.define('roles', {
         id: {
             type: Sequelize.INTEGER,
             autoIncrement: true,
@@ -26,13 +26,13 @@ module.exports = (sequelize, Sequelize) => {
         tableName: 'roles',
     },
     );
-    Role.associate = (models) => {
-        Role.hasMany(models.userRoles, {
+    model.associate = (models) => {
+        model.hasMany(models.userRoles, {
             onDelete: 'CASCADE',
             foreignKey: {
                 field: 'role_id',
             },
         });
     };
-    return Role;
+    return model;
 };
