@@ -1,18 +1,22 @@
 module.exports = (sequelize, Sequelize) => {
-    const model = sequelize.define('lessonsCategories', {
+    const model = sequelize.define('tags', {
         id: {
             type: Sequelize.INTEGER,
             primaryKey: true,
             unique: true,
             autoIncrement: true,
         },
+        name: {
+            type: Sequelize.STRING,
+            field: 'name'
+        },
         lessonId: {
             type: Sequelize.INTEGER,
             field: 'lesson_id'
         },
-        categoryId: {
+        courseId: {
             type: Sequelize.INTEGER,
-            field: 'category_id'
+            field: 'course_id'
         },
         createdAt: {
             type: Sequelize.DATE,
@@ -29,12 +33,10 @@ module.exports = (sequelize, Sequelize) => {
     {
         timestamps: true,
         underscored: true,
-        tableName: 'lessons_categories',
+        tableName: 'tags',
     },
     );
     model.associate = (models) => {
-        model.belongsTo(models.lessons);
-        model.belongsTo(models.categories);
     };
 
     return model;

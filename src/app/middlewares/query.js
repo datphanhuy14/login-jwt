@@ -60,7 +60,6 @@ export class Query {
 
         next();
     }
-
     static where(req) {
         let { filter } = req.query;
         const where = {};

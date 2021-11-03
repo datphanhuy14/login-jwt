@@ -1,3 +1,4 @@
+/* eslint-disable no-async-promise-executor */
 import Entity from '../entity';
 import db from '../models';
 import * as bcrypt from 'bcryptjs';
@@ -59,6 +60,7 @@ class userEntity extends Entity {
             }
         });
     }
+    
     async login(params) {
         return new Promise(async (resolve, reject) => {
             try {
@@ -135,8 +137,6 @@ class userEntity extends Entity {
                 );
             }
         });
-
     }
-
 }
 export default new userEntity;

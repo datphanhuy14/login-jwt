@@ -40,7 +40,6 @@ module.exports = (sequelize, Sequelize) => {
         //         field: 'category_id',
         //     },
         // });
-        model.hasMany(models.lessonsCategories,{foreignKey: 'category_id'});
 
     };
     return model;

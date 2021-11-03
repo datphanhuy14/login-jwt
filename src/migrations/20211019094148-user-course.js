@@ -22,6 +22,10 @@ module.exports = {
                 type: DataTypes.STRING,
                 field: 'type'
             },
+            process : {
+                type: DataTypes.STRING,
+                field: 'process'
+            },
             createdAt: {
                 type: DataTypes.DATE,
                 allowNull: true,
