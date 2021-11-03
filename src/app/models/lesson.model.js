@@ -81,7 +81,7 @@ module.exports = (sequelize, Sequelize) => {
     });
     model.associate = (models) => {
         model.belongsTo(models.courses, {foreignKey: "course_id"});
-        model.hasMany(models.lessonsCategories, {foreignKey: "lesson_id"});
+        // model.hasMany(models.lessonsCategories, {foreignKey: "lesson_id"});
     };
     return model;
 };

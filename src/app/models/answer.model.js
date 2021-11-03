@@ -5,21 +5,24 @@ module.exports = (sequelize, Sequelize) => {
             autoIncrement: true,
             primaryKey: true,
         },
-        userId: {
-            type: Sequelize.STRING,
-            field: 'user_id',
-        },
         answer: {
             type: Sequelize.STRING,
+            allowNull: false,
             field: 'user_id',
         },
         lessonId: {
             type: Sequelize.STRING,
+            allowNull: false,
             field: 'lesson_id',
         },
-        image: {
+        type: {
             type: Sequelize.STRING,
-            field: 'image',
+            allowNull: false,
+            field: 'type',
+        },
+        media: {
+            type: Sequelize.STRING,
+            field: 'media',
         },
         questionId: {
             type: Sequelize.STRING,

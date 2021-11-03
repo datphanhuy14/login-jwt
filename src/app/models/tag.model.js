@@ -10,20 +10,21 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.STRING,
             field: 'name'
         },
-        lessonId: {
-            type: Sequelize.INTEGER,
-            field: 'lesson_id'
+        entityType: {
+            type: Sequelize.STRING,
+            allowNull: false,
+            field: 'entity_type'
         },
-        courseId: {
+        entityId: {
             type: Sequelize.INTEGER,
-            field: 'course_id'
+            allowNull: false,
+            field: 'entity_id'
         },
         createdAt: {
             type: Sequelize.DATE,
             allowNull: true,
             field: 'created_at',
         },
-
         updatedAt: {
             type: Sequelize.DATE,
             allowNull: true,
