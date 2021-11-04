@@ -6,10 +6,6 @@ module.exports = (sequelize, Sequelize) => {
             unique: true,
             autoIncrement: true,
         },
-        type: {
-            type: Sequelize.STRING,
-            field: 'type'
-        },
         userId: {
             type: Sequelize.UUID,
             field: 'user_id'
@@ -22,17 +18,14 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.INTEGER,
             field: 'lesson_id'
         },
-        content: {
-            type: Sequelize.STRING,
-            field: 'content',
-        },
         turn: {
             type: Sequelize.STRING,
             field: 'turn',
         },
-        submit_answer: {
+        submitAnswer: {
             type: Sequelize.STRING,
-            field: 'image'
+            allowNull: false,
+            field: 'submit_answer'
         },
         active: {
             type: Sequelize.BOOLEAN,

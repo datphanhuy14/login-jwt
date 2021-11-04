@@ -10,15 +10,15 @@ module.exports = (sequelize, Sequelize) => {
             allowNull: false,
             field: 'user_id',
         },
+        isCorrect: {
+            type: Sequelize.BOOLEAN,
+            allowNull: false,
+            defaultValue: false,
+        },
         lessonId: {
             type: Sequelize.STRING,
             allowNull: false,
             field: 'lesson_id',
-        },
-        type: {
-            type: Sequelize.STRING,
-            allowNull: false,
-            field: 'type',
         },
         media: {
             type: Sequelize.STRING,

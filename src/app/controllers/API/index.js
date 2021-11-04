@@ -6,7 +6,10 @@ import lesson from './lesson.controller';
 import question from './question.controller';
 import answerLog from './answerLog.controller';
 import category from './category.controller';
+import answer from './answer.controller';
+import userRole from './userRole.controller';
+import tag from './tag.controller';
 
 export {
-    course, lesson, question, answerLog, rate, subject, userCourse, category
+    course, lesson, question, answerLog, rate, subject, userCourse, category, answer , tag, userRole
 };

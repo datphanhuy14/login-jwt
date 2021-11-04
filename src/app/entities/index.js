@@ -7,8 +7,16 @@ import lessonEntity from './lesson.entity';
 import questionEntity from './question.entity';
 import answerLogEntity from './answerLog.entity';
 import categoryEntity from './category.entity';
+import userRoleEntity from './userRole.entity';
+import tagEntity from './tag.entity';
+import answerEntity from './answer.entity';
+import roleEntity from './role.entity';
 
 export {
+    roleEntity,
+    answerEntity,
+    tagEntity,
+    userRoleEntity,
     answerLogEntity,
     questionEntity,
     lessonEntity,

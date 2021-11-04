@@ -6,12 +6,26 @@ module.exports = (sequelize, Sequelize) => {
             unique: true,
             autoIncrement: true,
         },
-        type: {
+        mediaType: {
             type: Sequelize.STRING,
-            field: 'type'
+            allowNull: false,
+            field: 'media_type',
+            validate: {
+                isIn: {
+                    args: [['pdf', 'video', 'audio','mix','image']],
+                    msg: 'question.validation.mediaTypeIsNotValid'
+                }
+            }
+        },
+        type: {
+            type : Sequelize.ENUM,
+            values : ['mixMixture', 'wordFill', 'matching', 'correctAnswer'],
+            defaultValue : 'mixMixture',
+            field : 'type'
         },
         lessonId: {
             type: Sequelize.INTEGER,
+            allowNull: true,
             field: 'lesson_id'
         },
         content: {
@@ -21,10 +35,6 @@ module.exports = (sequelize, Sequelize) => {
         title: {
             type: Sequelize.STRING,
             field: 'title',
-        },
-        image: {
-            type: Sequelize.STRING,
-            field: 'image'
         },
         active: {
             type: Sequelize.BOOLEAN,
